@@ -61,7 +61,7 @@ const ForgotPasswordOtp = () => {
                 />
              </div>
                 <p className=" text-red-500 text-sm">{error}</p>
-                <p className=" text-sm text-[#0654B0]">Resend code</p>
+                <p className="-mt-3 text-sm text-[#0654B0]">Resend code</p>
                 <button onClick={submit} className=" widthMd text-white bg-[#0654B0] h-10 rounded-md">Create new password</button>
         </section>
     </div>

@@ -42,10 +42,10 @@ const ForgotPassword = () => {
             <h1 className=" text-[#1F2223] text-2xl">Forgot password</h1>
             <p className="w-[80%] pt-2 text-[#57595A]  text-sm ">Kindly input your e-mail below</p>
             <aside className="pt-3 flex flex-col gap-3">
-                <label>
+                <label className="flex flex-col gap-2">
                     <p>Email</p>
                     <input value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[21rem] w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
-                </label>
+                </label >
                 <p className=" text-red-500 text-sm">{error}</p>
                 <button onClick={submit} className="widthMd w-[80%] md:w-[21rem] text-white bg-[#0654B0] h-10 rounded-md">Submit</button>
             </aside>
