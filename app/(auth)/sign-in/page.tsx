@@ -24,7 +24,7 @@ const SignIn = () => {
         mutationKey:["next"],
         onSuccess:()=>{
             console.log("succes");
-            router.push("/")
+            router.push("/dashboard")
         },
         onError:(e:any)=>{
             console.log(e?.response?.data?.message);
@@ -67,5 +67,4 @@ const SignIn = () => {
     </div>
      );
 }
- 
 export default SignIn;

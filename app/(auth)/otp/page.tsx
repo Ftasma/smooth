@@ -21,7 +21,7 @@ const Otp = () => {
         mutationKey:["next"],
         onSuccess:()=>{
             console.log("succes");
-            router.push("/")
+            router.push("/dashboard")
         },
         onError:(e:any)=>{
             console.log(e?.response?.data?.message);
@@ -59,7 +59,7 @@ const Otp = () => {
                 />
              </div>
                 <p className=" text-red-500 text-sm">{error}</p>
-                <p className="-mt-3 text-sm text-[#0654B0]">Resend code</p>
+                <p className=" text-sm text-[#0654B0]">Resend code</p>
                 <button onClick={submit} className=" widthMd text-white bg-[#0654B0] h-10 rounded-md">Verify</button>
                 <p className="mt-2 text-[#1F2223] text-sm">Wrong Email?<Link href="/sign-up" ><span className="pl-1 text-[#0654B0]">Go back</span></Link></p>
         </section>
