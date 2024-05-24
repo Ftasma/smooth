@@ -18,7 +18,7 @@ const SignIn = () => {
      const [email, setEmail]= useState("")
      const [password, setPassword]= useState("")
      const [error, setError]= useState("")
-     
+     const [isAuth, setIsAuth]= useState(false)
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
