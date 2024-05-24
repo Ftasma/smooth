@@ -19,11 +19,11 @@ const CreateElection2 = () => {
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
             <aside className=' mt-12 space-y-3'>
                 <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>
-                <button><Image className=' h-5 w-5' src={plus} alt='plus button'/></button>
+                <Link href="/add-candidates"><button><Image className=' h-5 w-5' src={plus} alt='plus button'/></button></Link>
                 <p className='text-[#57595A] -mt-1'>Add candidate</p>
                 </div>
             </aside>
-            <Link href="/add-candidates"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] rounded-md mx-auto'>Continue</Button></Link>
+            <Link href="/voters-acquisition"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] rounded-md mx-auto'>Continue</Button></Link>
         </aside>
     </div>
   )

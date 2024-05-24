@@ -7,6 +7,7 @@ import { useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react"
 const SignIn = () => {
     const fetchData=(payload:any)=>{
         return axios.post("https://sbxapi.smoothballot.com/user/auth/login",{
@@ -19,12 +20,17 @@ const SignIn = () => {
      const [password, setPassword]= useState("")
      const [error, setError]= useState("")
      const [isAuth, setIsAuth]= useState(false)
+     const [isLoading, setIsloading]= useState(false)
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
         onSuccess:()=>{
             console.log("succes");
-            router.push("/dashboard")
+            setIsloading(true)
+            setTimeout(()=>{  
+                setIsloading(false)
+                router.push("/dashboard")
+            },3000)
         },
         onError:(e:any)=>{
             console.log(e?.response?.data?.message);
@@ -56,7 +62,14 @@ const SignIn = () => {
                 </label>
                 <p className=" text-red-500 text-sm">{error}</p>
                 <Link href="/forgot-password"><p className="my-1 text-sm text-[#0654B0]">Forgot password?</p></Link>
-                 <button onClick={submit} className="widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md">Login</button>
+                 <button onClick={submit} className="widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md">{
+                     isLoading?(
+                        <div className='flex items-center justify-center'>
+                        <Loader2 size={20} className='animate-spin'/> &nbsp;
+                        Loading...
+                        </div>
+                      ):"Login"
+                 }</button>
                 <p className=" text-sm">Don't have an account? <Link href="/sign-up"> <span className=" text-[#0654B0]">Create one</span></Link></p>
             </aside>
             </div>

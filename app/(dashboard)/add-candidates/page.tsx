@@ -31,7 +31,7 @@ const AddCandidates = () => {
                 <textarea name="" className='w-[100%] h-[200px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
             </label>
         </aside>
-        <Link href=""><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[76%] h-[58px] rounded-md mx-[12%]'>Continue</Button></Link>
+        <Link href="/create-election-2"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[76%] h-[58px] rounded-md mx-[12%]'>Continue</Button></Link>
     </aside>
 </div>
   )
