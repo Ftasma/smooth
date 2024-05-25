@@ -8,7 +8,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react"
+import { useCookies } from "react-cookie"
 const SignIn = () => {
+    const [ cookie, setCookie ] = useCookies();
+    
     const fetchData=(payload:any)=>{
         return axios.post("https://sbxapi.smoothballot.com/user/auth/login",{
             email:payload.email,
@@ -24,18 +27,27 @@ const SignIn = () => {
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
-        onSuccess:()=>{
-            console.log("succes");
+        onSuccess:(response)=>{
             setIsloading(true)
+            const token= response.data.data.token
+            console.log(token);
+            setCookie("token", token, {
+                path: "/",
+                maxAge: 3600,
+                sameSite: false,
+              });
+            console.log("succes");
             setTimeout(()=>{  
                 setIsloading(false)
-                router.push("/dashboard")
+                setIsAuth(true)
+               router.push("/dashboard")
             },3000)
         },
         onError:(e:any)=>{
+            setIsloading(true)
             console.log(e?.response?.data?.message);
-            setError(e?.response?.data?.message)
-                setTimeout(()=>{
+            setTimeout(()=>{
+                    setError(e?.response?.data?.message)
                     setError("")
                 },3000)
         }
@@ -65,8 +77,8 @@ const SignIn = () => {
                  <button onClick={submit} className="widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md">{
                      isLoading?(
                         <div className='flex items-center justify-center'>
-                        <Loader2 size={20} className='animate-spin'/> &nbsp;
-                        Loading...
+                        <Loader2 size={20} className='animate-spin'/>
+                       
                         </div>
                       ):"Login"
                  }</button>
