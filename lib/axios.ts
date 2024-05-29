@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-export const createAgent = () => {
+export const CreateAgent = () => {
     const agent = axios.create({
     
         baseURL: 'https://sbxapi.smoothballot.com',
