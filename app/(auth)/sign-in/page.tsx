@@ -9,11 +9,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react"
 import { useCookies } from "react-cookie"
+import { BASE_URL } from "@/lib/endpoints"
+import { cn } from "@/lib/utils"
+
 const SignIn = () => {
     const [ cookie, setCookie ] = useCookies();
-    
     const fetchData=(payload:any)=>{
-        return axios.post("https://sbxapi.smoothballot.com/user/auth/login",{
+        return axios.post(`${BASE_URL}/user/auth/login`,{
             email:payload.email,
             password:payload.password,
         })
@@ -39,15 +41,15 @@ const SignIn = () => {
             console.log("succes");
             setTimeout(()=>{  
                 setIsloading(false)
-                setIsAuth(true)
                router.push("/dashboard")
             },3000)
         },
         onError:(e:any)=>{
             setIsloading(true)
             console.log(e?.response?.data?.message);
+            setError(e?.response?.data?.message)
             setTimeout(()=>{
-                    setError(e?.response?.data?.message)
+                     setIsloading(false)
                     setError("")
                 },3000)
         }
@@ -74,7 +76,7 @@ const SignIn = () => {
                 </label>
                 <p className=" text-red-500 text-sm">{error}</p>
                 <Link href="/forgot-password"><p className="my-1 text-sm text-[#0654B0]">Forgot password?</p></Link>
-                 <button onClick={submit} className="widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md">{
+                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
                         <Loader2 size={20} className='animate-spin'/>

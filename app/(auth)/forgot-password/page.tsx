@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         mutationKey:["next"],
         onSuccess:()=>{
             console.log("succes");
-            router.push("/forgot-password-otp")
+            router.push("/otp/forgot-password-otp")
         },
         onError:(e:any)=>{
             console.log(e?.response?.data?.message);

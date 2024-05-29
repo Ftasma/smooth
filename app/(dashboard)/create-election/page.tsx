@@ -22,7 +22,9 @@ const CreateElection = () => {
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Date of election 
+                    <div className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2 '>
                     <input placeholder='12/10/12' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="date"/>
+                    </div>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Election posts

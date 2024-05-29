@@ -1,12 +1,15 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import plus from "../../../public/gg_add.png"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import AddCandidates from '@/components/AddCandidates'
 const CreateElection2 = () => {
+  const [showModal, setShowModal]= useState(false)
   return (
+    <>
     <div className=' h-screen w-full '>
-      
         <Link href='/create-election'><button className=' bg-gray-300 h-8 w-10 rounded-full text-black mt-[7%] ml-[7%]'>&#8636;</button></Link>
         <aside className='dashboard-dimensions'>
             <h1 className='text-[#1F2223] text-2xl font-bold '>Create new election</h1>
@@ -19,13 +22,15 @@ const CreateElection2 = () => {
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
             <aside className=' mt-12 space-y-3'>
                 <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>
-                <Link href="/add-candidates"><button><Image className=' h-5 w-5' src={plus} alt='plus button'/></button></Link>
+                <button onClick={()=>setShowModal(true)}><Image className=' h-5 w-5' src={plus} alt='plus button'/></button>
                 <p className='text-[#57595A] -mt-1'>Add candidate</p>
                 </div>
             </aside>
             <Link href="/voters-acquisition"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] rounded-md mx-auto'>Continue</Button></Link>
         </aside>
     </div>
+    <AddCandidates isVisible={showModal} onClose={()=>setShowModal(false)}/>
+    </>
   )
 }
 

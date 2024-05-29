@@ -7,9 +7,12 @@ import { useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/lib/endpoints"
+import { Loader2 } from "lucide-react"
+import { cn } from "@/lib/utils"
 const SignUp = () => {
     const fetchData=(payload:any)=>{
-        return axios.post("https://sbxapi.smoothballot.com/user/auth/sign-up",{
+        return axios.post(`${BASE_URL}/user/auth/sign-up`,{
             name:payload.name,
             email:payload.email,
             password:payload.password,
@@ -20,17 +23,24 @@ const SignUp = () => {
      const [email, setEmail]= useState("")
      const [error, setError]= useState("")
      const [password, setPassword]= useState("")
+     const [isLoading, setIsloading]= useState(false)
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
-        onSuccess:()=>{
-            console.log("succes");
-            router.push("/otp")
+        onSuccess:(respose)=>{
+            setIsloading(true)
+            console.log(respose);
+            setTimeout(()=>{  
+                setIsloading(false)
+                router.push("/otp")
+            },3000)
         },
         onError:(e:any)=>{
+            setIsloading(true)
             console.log(e?.response?.data?.message);
             setError(e?.response?.data?.message)
                 setTimeout(()=>{
+                    setIsloading(false)
                     setError("")
                 },3000)
         }
@@ -60,7 +70,14 @@ const SignUp = () => {
                     <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%]  h-10 border-2 border-[#E5E5E5] rounded-md" type="password"/>
                 </label>
                 <p className=" text-red-500 text-sm">{error}</p>
-                <button onClick={submit} className="w-[min(100%,38rem)]  md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md">Get Started</button>
+                <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
+                     isLoading?(
+                        <div className='flex items-center justify-center'>
+                        <Loader2 size={20} className='animate-spin'/>
+                       
+                        </div>
+                      ):"Login"
+                 }</button>
                 <p className=" text-sm">Already have an account? <Link href="/sign-in"><span className=" text-[#0654B0]">Login here</span></Link> </p>
             </aside>
             </div>
