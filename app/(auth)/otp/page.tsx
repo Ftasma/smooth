@@ -7,6 +7,7 @@ import { useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const Otp = () => {
     const fetchData=(payload:any)=>{
         return axios.post("https://sbxapi.smoothballot.com/user/auth/sign-up/verify",{
@@ -24,11 +25,7 @@ const Otp = () => {
             router.push("/dashboard")
         },
         onError:(e:any)=>{
-            console.log(e?.response?.data?.message);
-            setError(e?.response?.data?.message)
-                setTimeout(()=>{
-                    setError("")
-                },3000)
+            toast.error(e?.response?.data?.message)
         }
     })
     const submit=()=>{

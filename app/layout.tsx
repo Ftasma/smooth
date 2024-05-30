@@ -6,6 +6,7 @@ import Providers from "./provider";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import ClientSetup from "@/components/ClientSetup";
+import { ToastProvider } from "@/components/providers/toaster-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
     
       <Providers>
        <ClientSetup/>
+       <ToastProvider/>
         {children}
       </Providers>
       

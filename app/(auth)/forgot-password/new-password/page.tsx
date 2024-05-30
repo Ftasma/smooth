@@ -5,6 +5,7 @@ import { useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const NewPassword = () => {
     const fetchData=(payload:any)=>{
         return axios.post("https://sbxapi.smoothballot.com/user/auth/forgot-password",{
@@ -23,11 +24,7 @@ const NewPassword = () => {
             router.push("/sign-in")
         },
         onError:(e:any)=>{
-            console.log(e?.response?.data?.message);
-            setError(e?.response?.data?.message)
-                setTimeout(()=>{
-                    setError("")
-                },3000)
+            toast.error(e?.response?.data?.message)
         }
     })
     const submit=()=>{

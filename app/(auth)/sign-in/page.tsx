@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react"
 import { useCookies } from "react-cookie"
 import { BASE_URL } from "@/lib/endpoints"
 import { cn } from "@/lib/utils"
+import toast from "react-hot-toast"
 
 const SignIn = () => {
     const [ cookie, setCookie ] = useCookies();
@@ -45,13 +46,8 @@ const SignIn = () => {
             },3000)
         },
         onError:(e:any)=>{
-            setIsloading(true)
+            toast.error(e?.response?.data?.message)
             console.log(e?.response?.data?.message);
-            setError(e?.response?.data?.message)
-            setTimeout(()=>{
-                     setIsloading(false)
-                    setError("")
-                },3000)
         }
     })
     const submit=()=>{

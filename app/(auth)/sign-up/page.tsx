@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/lib/endpoints"
 import { Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import toast from "react-hot-toast"
 const SignUp = () => {
     const fetchData=(payload:any)=>{
         return axios.post(`${BASE_URL}/user/auth/sign-up`,{
@@ -36,13 +37,7 @@ const SignUp = () => {
             },3000)
         },
         onError:(e:any)=>{
-            setIsloading(true)
-            console.log(e?.response?.data?.message);
-            setError(e?.response?.data?.message)
-                setTimeout(()=>{
-                    setIsloading(false)
-                    setError("")
-                },3000)
+            toast.error(e?.response?.data?.message)
         }
     })
     const submit=()=>{
