@@ -6,11 +6,12 @@ import vector from "../../../public/Vector.png"
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ChevronLeft, Upload } from 'lucide-react'
 const VotersAcquisition = () => {
   return (
     <div className=' h-[100vh] w-full'>
       
-    <Link href='/create-election-2'><button className=' bg-gray-300 h-8 w-10 rounded-full text-black mt-[7%] ml-[7%]'>&#8636;</button></Link>
+    <Link href='/create-election-2'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
     <aside className='dashboard-dimensions'>
         <h1 className='text-[#1F2223] text-2xl font-bold '>Voters Acquisition</h1>
         <p className='text-[#57595A]'>Choose one of the following options⚡</p>
@@ -23,7 +24,7 @@ const VotersAcquisition = () => {
         <aside className=' mt-12 space-y-3'>
             <div className=' original-border mx-auto !h-[12rem] !w-[80%] !border-[#BCBCBC] gap-3 flex flex-col justify-center items-center'>  
                   <Input id="file" className='opacity-0' type="file" />
-                  <Image alt="vector" className='-mt-10 h-5 w-5' src={vector}/>    
+                  <Upload className='-mt-10 cursor-pointer text-[#0654B0] text-sm'/>   
               <p className='text-[#1F2223]'>Import .csv file</p>
             </div>
             <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>

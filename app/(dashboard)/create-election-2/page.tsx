@@ -4,13 +4,15 @@ import React, { useState } from 'react'
 import plus from "../../../public/gg_add.png"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import AddCandidates from '@/components/AddCandidates'
+import { ChevronLeft, PlusCircle } from 'lucide-react'
+import AddCandidates from '../_components/AddCandidates'
 const CreateElection2 = () => {
   const [showModal, setShowModal]= useState(false)
   return (
     <>
     <div className=' h-screen w-full '>
-        <Link href='/create-election'><button className=' bg-gray-300 h-8 w-10 rounded-full text-black mt-[7%] ml-[7%]'>&#8636;</button></Link>
+      
+        <Link href='/create-election'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
         <aside className='dashboard-dimensions'>
             <h1 className='text-[#1F2223] text-2xl font-bold '>Create new election</h1>
             <p className='text-[#57595A]'>Fill in the details below⚡</p>
@@ -22,8 +24,8 @@ const CreateElection2 = () => {
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
             <aside className=' mt-12 space-y-3'>
                 <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>
-                <button onClick={()=>setShowModal(true)}><Image className=' h-5 w-5' src={plus} alt='plus button'/></button>
-                <p className='text-[#57595A] -mt-1'>Add candidate</p>
+                <PlusCircle onClick={()=>setShowModal(true)} className='cursor-pointer text-[#0654B0]' size={20}/>
+                <p className='text-[#57595A]'>Add candidate</p>
                 </div>
             </aside>
             <Link href="/voters-acquisition"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] rounded-md mx-auto'>Continue</Button></Link>
