@@ -35,3 +35,7 @@ export default function RootLayout({
     </html>
   );
 }
+function removeCookie(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+

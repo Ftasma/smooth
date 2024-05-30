@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+
 export default function RootLayout({
   
   children,
@@ -14,3 +15,7 @@ export default function RootLayout({
     </main>
   );
 }
+function removeCookie(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+

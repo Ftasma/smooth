@@ -5,7 +5,7 @@ import picture from "../../../public/Rectangle 1.png"
 import Link from "next/link"
 import { useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react"
 import { useCookies } from "react-cookie"

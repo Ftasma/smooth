@@ -1,15 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
-import plus from "../../../public/gg_add.png"
-import Image from 'next/image'
-import vector from "../../../public/Vector.png"
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ChevronLeft, Upload } from 'lucide-react'
 const VotersAcquisition = () => {
   return (
-    <div className=' h-[100vh] w-full'>
+    <section className=' h-[100vh] w-full'>
       
     <Link href='/create-election-2'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
     <aside className='dashboard-dimensions'>
@@ -33,7 +30,7 @@ const VotersAcquisition = () => {
         </aside>
         <Link href=""><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] rounded-md mx-auto'>Continue</Button></Link>
     </aside>
-</div>
+</section>
   )
 }
 
