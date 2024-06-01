@@ -12,7 +12,7 @@ const AccreditionForm = () => {
   return (
     <section className='h-[100vh] w-full'>
          <Link href='/voters-acquisition'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
-         <div className='dashboard-dimensions px-5 md:overflow-y-auto no-scrollbar'>
+         <div className='dashboard-dimensions px-5 md:overflow-y-auto'>
             <h1 className=' text-2xl font-medium'>Create Accreditation Form</h1>
             <p className='text-sm text-gray-500'>Personalize your accreditation form</p>
             <div className={cn('mt-3 h-10 flex justify-between px-5 w-full bg-[#F6F6F6]', !isEditing&&"bg-[#C92929] !text-white")}>
