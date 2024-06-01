@@ -15,7 +15,7 @@ const AccreditionForm = () => {
          <div className='dashboard-dimensions px-5 md:overflow-y-auto'>
             <h1 className=' text-2xl font-medium'>Create Accreditation Form</h1>
             <p className='text-sm text-gray-500'>Personalize your accreditation form</p>
-            <div className={cn('mt-3 h-10 flex justify-between px-5 w-full bg-[#F6F6F6]', !isEditing&&"bg-[#C92929] !text-white")}>
+            <div className={cn('mt-3 h-10 flex justify-between px-5 w-full bg-white md:bg-[#F6F6F6]', !isEditing&&"bg-[#C92929] md:bg-[#C92929] !text-white")}>
               <p className=' opacity-0'>ss</p>
               <span className=' flex items-center gap-3'>{isEditing&&(
                <p className='text-[#2D3648]'> Accepting Response</p>
