@@ -46,8 +46,8 @@ const AccreditionForm = () => {
                   <button className='flex gap-1 border-[2px] p-1 border-[#A92323] text-[#A92323] items-center'><Trash className='' size={18}/><p className='text-[0.8rem] font-bold'>Delete</p></button>
                 </div>
             </aside>
-                <Button className='place-self-start border-2 border-[#0654B0] text-[#0654B0] rounded'><Plus/>Add more questions</Button>
-                <Button className=' place-self-center bg-[#0654B0] text-white mt-3 w-[85%] rounded'>Get link <ArrowRight/></Button>
+                <Button className='place-self-start border-2 border-[#0654B0] gap-x-2 text-[#0654B0] rounded'><Plus size={17}/>Add more questions</Button>
+                <Button variant="ghost" className=' place-self-center bg-[#0654B0] gap-x-2 text-white mt-3 w-[85%] rounded'>Get link <ArrowRight size={17}/></Button>
          </div>
     </section>
   )
