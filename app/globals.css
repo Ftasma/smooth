@@ -15,3 +15,14 @@
   .dashboard-dimensions{
     @apply md:bg-[#FFFFFF] md:h-[80%] py-3 md:w-[60%] text-center mx-auto my-auto flex flex-col gap-3
   }
+  @layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+}
