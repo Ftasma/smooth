@@ -46,7 +46,7 @@ const handleLogout = () => {
     <DropdownMenuTrigger asChild>
       <Button variant="ghost"><Image src={userImage} height={30} width={60} alt='user image'/></Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent className="w-56">
+    <DropdownMenuContent className="w-[10rem] mr-3 bg-white">
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
