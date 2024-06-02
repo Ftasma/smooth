@@ -12,7 +12,7 @@ import { useCookies } from "react-cookie"
 import { BASE_URL } from "@/lib/endpoints"
 import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
-
+import { Eye, EyeOff } from "lucide-react"
 const SignIn = () => {
     const [ cookie, setCookie ] = useCookies();
     const fetchData=(payload:any)=>{
@@ -27,6 +27,7 @@ const SignIn = () => {
      const [error, setError]= useState("")
      const [isAuth, setIsAuth]= useState(false)
      const [isLoading, setIsloading]= useState(false)
+     const [showPassword, setShowPassword] = useState(false)
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
@@ -54,9 +55,12 @@ const SignIn = () => {
         mutation.mutate({email,password})
         console.log({email,password});
     }
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     return (
     <div className="flex  w-full">
-       <section className="pt-6 px-6 md:ml-16 flex w-full flex-col gap-4 md:w-[50%]">
+       <section className="pt-6 md:px-16 px-8 flex w-full flex-col gap-4 md:w-[50%]">
             <header><Image className=" w-[110px] h-[110px]" src={lightlogo} alt="logo"/></header>
             <div className="flex flex-col gap-3 w-full mx-auto">
             <h1 className=" text-[#1F2223]  text-2xl">Welcome back!</h1>
@@ -64,15 +68,24 @@ const SignIn = () => {
             <aside className=" flex flex-col gap-3">
                 <label className=" flex flex-col gap-2">
                     <p>Email</p>
-                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%] w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
+                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
                 </label>
-                <label className=" flex flex-col gap-2">
+                <label className=" flex flex-col gap-2 relative">
                     <p>Password</p>
-                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%] w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="password"/>
+                    <div className="relative widthMd md:w-[100%] w-[80%]">
+                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <button
+                                type="button"
+                                onClick={toggleShowPassword}
+                                className="absolute  right-2 top-1/2 transform -translate-y-1/2 text-gray-600 focus:outline-none"
+                                >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                    </div>
                 </label>
                 <p className=" text-red-500 text-sm">{error}</p>
                 <Link href="/forgot-password"><p className="my-1 text-sm text-[#0654B0]">Forgot password?</p></Link>
-                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
+                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
                         <Loader2 size={20} className='animate-spin'/>

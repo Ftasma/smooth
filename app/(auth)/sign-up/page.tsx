@@ -8,7 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/lib/endpoints"
-import { Loader2 } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
 const SignUp = () => {
@@ -25,6 +25,7 @@ const SignUp = () => {
      const [error, setError]= useState("")
      const [password, setPassword]= useState("")
      const [isLoading, setIsloading]= useState(false)
+     const [showPassword, setShowPassword] = useState(false)
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
@@ -44,9 +45,12 @@ const SignUp = () => {
         mutation.mutate({name,email,password})
         console.log({name,email,password});
     }
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     return ( 
     <div className="flex  w-full">
-       <section className="pt-6 px-6 md:ml-16 flex w-full flex-col gap-4 md:w-[50%]">
+       <section className="pt-6 md:px-16 px-8 flex w-full flex-col gap-4 md:w-[50%]">
             <header><Image className=" w-[110px] h-[110px]" src={lightlogo} alt="logo"/></header>
             <div className="flex flex-col gap-3 w-full mx-auto">
             <h1 className=" text-[#1F2223] text-2xl">Create an account</h1>
@@ -54,24 +58,33 @@ const SignUp = () => {
             <aside className="pt-3 flex flex-col gap-3">
                 <label className=" flex flex-col gap-2">
                     <p>Name</p>
-                    <input required value={name} onChange={(e)=>setName(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%] h-10 border-2 border-[#E5E5E5] rounded-md" type="text" placeholder="John Doe"/>
+                    <input required value={name} onChange={(e)=>setName(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="text" placeholder="John Doe"/>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <p>Email</p>
-                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
+                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <p>Password</p>
-                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-[70%]  h-10 border-2 border-[#E5E5E5] rounded-md" type="password"/>
+                    <div className="relative widthMd md:w-[100%] w-[80%]">
+                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full  h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <button
+                                type="button"
+                                onClick={toggleShowPassword}
+                                className="absolute  right-2 top-1/2 transform -translate-y-1/2 text-gray-600 focus:outline-none"
+                                >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                    </div>
                 </label>
                 <p className=" text-red-500 text-sm">{error}</p>
-                <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-[70%] text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
+                <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
                         <Loader2 size={20} className='animate-spin'/>
                        
                         </div>
-                      ):"Login"
+                      ):"Sign-up"
                  }</button>
                 <p className=" text-sm">Already have an account? <Link href="/sign-in"><span className=" text-[#0654B0]">Login here</span></Link> </p>
             </aside>
