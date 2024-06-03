@@ -22,7 +22,6 @@ const SignUp = () => {
      const router = useRouter()
      const [name, setName]= useState("")
      const [email, setEmail]= useState("")
-     const [error, setError]= useState("")
      const [password, setPassword]= useState("")
      const [isLoading, setIsloading]= useState(false)
      const [showPassword, setShowPassword] = useState(false)
@@ -77,7 +76,6 @@ const SignUp = () => {
                             </button>
                     </div>
                 </label>
-                <p className=" text-red-500 text-sm">{error}</p>
                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>

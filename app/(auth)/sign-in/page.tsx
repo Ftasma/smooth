@@ -24,8 +24,6 @@ const SignIn = () => {
      const router = useRouter()
      const [email, setEmail]= useState("")
      const [password, setPassword]= useState("")
-     const [error, setError]= useState("")
-     const [isAuth, setIsAuth]= useState(false)
      const [isLoading, setIsloading]= useState(false)
      const [showPassword, setShowPassword] = useState(false)
      const mutation= useMutation({
@@ -83,9 +81,8 @@ const SignIn = () => {
                             </button>
                     </div>
                 </label>
-                <p className=" text-red-500 text-sm">{error}</p>
                 <Link href="/forgot-password"><p className="my-1 text-sm text-[#0654B0]">Forgot password?</p></Link>
-                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
+                 <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
                         <Loader2 size={20} className='animate-spin'/>

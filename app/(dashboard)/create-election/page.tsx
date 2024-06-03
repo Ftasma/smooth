@@ -1,9 +1,51 @@
+"use client"
 import { Button } from '@/components/ui/button'
+import { BASE_URL } from '@/lib/endpoints'
+import axios from 'axios'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
-
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { useMutation} from "@tanstack/react-query";
+import toast from 'react-hot-toast'
+const newDate =()=>{
+    
+}
 const CreateElection = () => {
+    const fetchData=(payload:any)=>{
+        return axios.post(`${BASE_URL}/election`,{
+            name:payload.name,
+            election_date:payload.date,
+        })
+     }
+     const router = useRouter()
+    const [name, setName]= useState("")
+     const [date, setDate]= useState("")
+     const mutation= useMutation({
+        mutationFn:fetchData,
+        mutationKey:["next"],
+        onSuccess:(response)=>{
+            const token= response.data.data.token
+            console.log(token);
+            toast.success("success");
+            setTimeout(()=>{  
+               router.push("/create-election-2")
+            },3000)
+        },
+        onError:(e:any)=>{
+            toast.error(e?.response?.data?.message)
+            console.log(e?.response?.data?.message);
+        }
+    })
+         
+
+   
+    const submit=()=>{
+        // const utcDate = new Date(date).toISOString();
+        // setDate(utcDate)
+        mutation.mutate({name,date: new Date(date).toISOString()})
+        console.log({name,date: new Date(date).toISOString()});
+    }
   return (
     <div className=' h-screen w-full '>
         <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
@@ -11,20 +53,20 @@ const CreateElection = () => {
             <h1 className='text-[#1F2223] text-2xl font-bold '>Create new election</h1>
             <p className='text-[#57595A]'>Fill in the details below⚡</p>
             <div className='flex w-[100%] justify-around'>
-                <span className=' z-50 rounded-full bg-[#0654B0] p-2 w-9 text-white'>1</span>
-                <span className=' z-50 rounded-full bg-[#EAEAEA] p-2 w-9 text-[#57595A]'>2</span>
-                <span className=' z-50 rounded-full bg-[#EAEAEA] p-2 w-9 text-[#57595A]'>3</span>
+            <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>1</p></span>
+            <span className=' z-50 rounded-full flex items-center justify-center bg-[#EAEAEA] p-3 px-6 w-9 text-[#57595A]'><p className=' place-self-center'>2</p></span>
+             <span className=' z-50 rounded-full flex items-center justify-center bg-[#EAEAEA] p-3 px-6 w-9 text-[#57595A]'><p className=' place-self-center'>3</p></span>
             </div>
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
             <aside className=' mt-12 space-y-3'>
                 <label className=' md:mx-[12%] mx-[8%] font-[Satoshi] flex flex-col gap-3 items-start '>
                     Election name 
-                    <input placeholder='My Election' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
+                    <input value={name} onChange={(e)=>setName(e.target.value)} placeholder='My Election' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Date of election 
                     <div className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2 '>
-                    <input placeholder='12/10/12' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="date"/>
+                    <input value={date} onChange={(e)=>setDate(e.target.value)} placeholder='12/10/12' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="date"/>
                     </div>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
@@ -32,7 +74,7 @@ const CreateElection = () => {
                     <input placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
                 </label>
             </aside>
-            <Link href="/create-election-2"><Button variant="outline" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[84%] md:w-[76%] h-[58px] mx-[8%] md:mx-[12%]'>Continue</Button></Link>
+            <Button onClick={submit} variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[84%] md:w-[76%] h-[58px] mx-[8%] md:mx-[12%]'>Continue</Button>
         </aside>
     </div>
   )
