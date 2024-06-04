@@ -2,7 +2,19 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
+import { BASE_URL } from '@/lib/endpoints'
+import { useQuery } from '@tanstack/react-query'
 const AddCandidates = ({onClose,isVisible}:any) => {
+    const fetchData=()=>{
+        return  axios.get(`${BASE_URL}/election/posts?ElectionId=3`)
+     }
+     const query = useQuery({
+      queryFn: fetchData,
+      queryKey: ['next'],
+     })
+     console.log(query?.data?.data?.data?.election_posts[0]);
+     
         const handleClose=(e:any)=>{
           if(e.target.id==="wrapper") onClose()
         }
@@ -19,8 +31,12 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                     Election post 
                     
                     <select className=' outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
-                        <option value="">President</option>
-                        <option value="">Vice President</option>
+                    {query?.data?.data?.data?.election_posts.map(
+                        (post:any)=>{
+                            return <option key={post.id} value={post.id}>{post.title}</option>
+                        }
+                    
+                    )}
                     </select>
                     
                 </label>

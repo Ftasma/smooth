@@ -1,7 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
+import { BASE_URL } from '@/lib/endpoints'
+import { useQuery } from '@tanstack/react-query'
 const AddCandidates = () => {
+    const fetchData=()=>{
+        return  axios.get(`${BASE_URL}/election/posts?ElectionId=5`)
+     }
+     const query = useQuery({
+      queryFn: fetchData,
+      queryKey: ['next'],
+     })
+     console.log(query?.data?.data?.data?.election_posts[0]);
+     
   return (
     <div className=' h-[100%] w-full '>
     <Link href='/create-election-2'><button className=' bg-gray-300 h-8 w-10 rounded-full text-black mt-[7%] ml-[7%]'>&#8636;</button></Link>
@@ -14,12 +26,16 @@ const AddCandidates = () => {
             <label className=' font-[Satoshi] flex flex-col gap-3 items-start md:mx-[12%] mx-[8%]'>
                 Election post 
                 <select name="" className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-4 pr-4' id="">
-                    <option value="">President</option>
-                    <option value="">Vice-President</option>
+                    {query?.data?.data?.data?.election_posts.map(
+                        (post:any)=>{
+                            return <option key={post.id} value={post.id}>{post.title}</option>
+                        }
+                    
+                    )}
                 </select>
             </label>
             <label className=' font-[Satoshi] flex flex-col gap-3 items-start md:mx-[12%] mx-[8%]'>
-                Name of candidate 
+                Name of candidate
                 <input placeholder='Oluwafemi' className='w-[100%] h-[58px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
             </label>
             <label className=' font-[Satoshi] flex flex-col gap-3 items-start md:mx-[12%] mx-[8%]'>

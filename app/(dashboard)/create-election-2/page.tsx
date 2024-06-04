@@ -6,7 +6,18 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, PlusCircle } from 'lucide-react'
 import AddCandidates from '../_components/AddCandidates'
+import axios from 'axios'
+import { BASE_URL } from '@/lib/endpoints'
+import { useQuery } from '@tanstack/react-query'
 const CreateElection2 = () => {
+  const fetchData=()=>{
+    return  axios.get(`${BASE_URL}/election/posts?ElectionId=5`)
+ }
+ const query = useQuery({
+  queryFn: fetchData,
+  queryKey: ['next'],
+ })
+
   const [showModal, setShowModal]= useState(false)
   return (
     <>
