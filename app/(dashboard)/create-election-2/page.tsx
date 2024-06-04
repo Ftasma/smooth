@@ -39,7 +39,7 @@ const CreateElection2 = () => {
             </div>
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
             {query?.data?.data?.data?.candidates?.map((candidate:any)=>(
-            <div className='mt-6 place-self-center h-16 flex justify-between  items-center px-3 rounded-xl w-[80%] border-2 border-blue-500 '>
+            <div key={candidate.id} className='mt-6 place-self-center h-16 flex justify-between  items-center px-3 rounded-xl w-[80%] border-2 border-blue-500 '>
               <div className=' w-[50%] flex justify-around items-center'>
                 <Image height={22} width={45} className=' object-cover' src={plus} alt='Candidate image'/>
                 <h1>{candidate.name}</h1>
