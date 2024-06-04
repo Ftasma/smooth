@@ -1,20 +1,52 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 const AddCandidates = ({onClose,isVisible}:any) => {
-    const fetchData=()=>{
-        return  axios.get(`${BASE_URL}/election/posts?ElectionId=3`)
+    const [electionPostId, setElectionPostId]=useState(0)
+    const [name, setName]=useState("")
+    const [image, setImage]=useState({})
+    const [bio, setBio]=useState("")
+    const [electionId, setElectionId]=useState('')
+    const fetchData=async()=>{
+        const electionId= localStorage.getItem("electionId")
+        return await axios.get(`${BASE_URL}/election/posts?ElectionId=${electionId}`)
      }
      const query = useQuery({
       queryFn: fetchData,
       queryKey: ['next'],
      })
-     console.log(query?.data?.data?.data?.election_posts[0]);
-     
+     const mutation= useMutation({
+        mutationFn:fetchData,
+        mutationKey:["next"],
+        onSuccess:(response)=>{
+            const token= response.data.data.token
+            console.log(token);
+            console.log("succes");
+        },
+        onError:(e:any)=>{
+            toast.error("error occured")
+        }
+    })
+    const submit=()=>{
+        // mutation.mutate({electionPostId,name,image:{
+        //     "link": "https://example.com/images/janesmith.png",
+        //     "id": "xyz456",
+        //     "extension": "png",
+        // },bio,electionId} as any)
+        console.log({electionPostId,name,image:{
+            "link": "https://example.com/images/janesmith.png",
+            "id": "xyz456",
+            "extension": "png",
+        },bio,electionId} as any)
+        onClose()
+    }
+   console.log( query?.data?.data?.data?.election_posts);
+   
         const handleClose=(e:any)=>{
           if(e.target.id==="wrapper") onClose()
         }
@@ -34,6 +66,8 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                     {query?.data?.data?.data?.election_posts.map(
                         (post:any)=>{
                             return <option key={post.id} value={post.id}>{post.title}</option>
+                            
+                            
                         }
                     
                     )}
@@ -42,16 +76,16 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Name of candidate
-                    <input placeholder='John doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
+                    <input value={name} onChange={(e)=>setName(e.target.value)} placeholder='John doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Image
-                    <input placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="file"/>
+                    <input  placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="file"/>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Bio
-                    <textarea name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
-                    <Button variant="ghost" type='button' onClick={onClose} className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
+                    <textarea value={bio} onChange={(e)=>setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
+                    <Button variant="ghost" type='button' onClick={submit} className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
                 </label>
             </aside>
         </div>

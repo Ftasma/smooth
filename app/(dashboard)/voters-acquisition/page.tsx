@@ -16,8 +16,9 @@ const VotersAcquisition = () => {
         <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>1</p></span>
             <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>2</p></span>
              <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>3</p></span>
+             <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>4</p></span>
         </div>
-        <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
+        <div className=' border-[#BCBCBC] border w-[75%] mx-auto border-dotted -mt-8'/>
         <aside className=' mt-12 space-y-3'>
             <div className=' original-border mx-auto !h-[12rem] !w-[80%] !border-[#BCBCBC] gap-3 flex flex-col justify-center items-center'>  
                   <Input id="file" className='opacity-0' type="file" />

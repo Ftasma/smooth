@@ -23,9 +23,11 @@ const CreateElection = () => {
         mutationFn:fetchData,
         mutationKey:["next"],
         onSuccess:(response)=>{
+            // console.log(response.data.data.election.id);
+            localStorage.setItem("electionId", response.data.data.election.id) 
             const token= response.data.data.token
             console.log(token);
-            toast.success("success");
+            toast.success("Election created successfully");
             setTimeout(()=>{  
                router.push("/create-election/election-posts")
             },3000)

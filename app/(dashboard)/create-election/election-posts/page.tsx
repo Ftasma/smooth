@@ -10,16 +10,6 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
 const Page = () => {
-    const fetchData=()=>{
-        return  axios.get(`${BASE_URL}/election`)
-        
-     }
-     const query = useQuery({
-      queryFn: fetchData,
-      queryKey: ['next'],
-     })
-    const electionId = query?.data?.data?.data?.elections[0]?.id
-    console.log(electionId);
     const sendData = (payload: any) => {
         return axios.post(`${BASE_URL}/election/post`, {
             title: payload.title,
@@ -31,9 +21,7 @@ const Page = () => {
         mutationFn: sendData,
         mutationKey: ["next"],
         onSuccess: (response) => {
-            const token = response.data.data.token
-            console.log(token);
-            toast.success("success");
+            toast.success("Post added successfully");
             setTimeout(() => {
 
             }, 3000)
@@ -43,18 +31,17 @@ const Page = () => {
         }
     })
     
-    const submit = () => {
-        console.log({ activeInput: inputs.find(input => input.active), electionId: electionId })
-        console.log({ title, inputs });
-    }
 
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
     const [title, setTitle] = useState('')
 
     const handleAddInput = () => {
-        // Log the current active input before rendering it inactive
+        const electionId= localStorage.getItem("electionId")
+        console.log(electionId);
+        
         const activeInput = inputs.find(input => input.active);
         mutation.mutate({ title:activeInput?.value, ElectionId: electionId })
+
         console.log(activeInput?.value);
         setInputs(prevInputs =>
             prevInputs.map(input => ({ ...input, active: false }))
@@ -76,9 +63,15 @@ const Page = () => {
                     <ChevronLeft />
                 </button>
             </Link>
-            <aside className='dashboard-dimensions !py-8'>
+            <aside className='dashboard-dimensions !py-8 overflow-y-auto'>
                 <h1 className='text-[#1F2223] text-2xl font-bold '>Add election posts</h1>
                 <p className='text-[#57595A]'>Fill in the details below⚡</p>
+                <div className='flex justify-around'>
+                <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>1</p></span>
+                <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>2</p></span>
+                <span className=' z-50 rounded-full flex items-center justify-center bg-[#EAEAEA] p-3 px-6 w-9 text-[#57595A]'><p className=' place-self-center'>3</p></span>
+            </div>
+            <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
                 <aside className='mt-12 space-y-3'>
                     <label className='md:mx-[12%] mx-[8%] font-[Satoshi] flex flex-col gap-3 items-start '>
                         Election post
@@ -99,8 +92,8 @@ const Page = () => {
                         </Button>
                     </label>
                 </aside>
-                <Link href="/create-election-2"><Button variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[84%] md:w-[76%] h-[58px] mx-[8%] md:mx-[12%]' onClick={submit}></Button></Link>
-                    Continue
+                <Link href="/create-election-2"><Button variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[84%] md:w-[76%] h-[58px] mx-[8%] md:mx-[12%]'>  Continue</Button></Link>
+                  
             </aside>
         </div>
     )

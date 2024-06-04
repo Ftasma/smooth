@@ -6,8 +6,8 @@ import axios from 'axios'
 import DisplayDashboard from './_components/DisplayDashboard'
 
 const Dashboard = () => {
-  const fetchData=()=>{
-    return  axios.get(`${BASE_URL}/election`)
+  const fetchData=async()=>{
+    return await axios.get(`${BASE_URL}/election`)
     
  }
  const query = useQuery({
