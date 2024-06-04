@@ -6,14 +6,29 @@ import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 const AddCandidates = ({onClose,isVisible}:any) => {
-    const [electionPostId, setElectionPostId]=useState(0)
+    const sendData=(payload:any)=>{
+        return axios.post(`${BASE_URL}/election/candidate`,{
+            ElectionPostId:payload.electionPostId,
+            name:payload.name,
+            image:payload.image,
+            bio:payload.bio,
+            ElectionId:payload.electionId
+        })
+     }
+    const router = useRouter()
+    const [electionPostId, setElectionPostId]=useState("")
     const [name, setName]=useState("")
     const [image, setImage]=useState({})
     const [bio, setBio]=useState("")
-    const [electionId, setElectionId]=useState('')
+    const [electionId, setElectionId]=useState(0)
     const fetchData=async()=>{
         const electionId= localStorage.getItem("electionId")
+        setElectionId(Number(electionId))
+        console.log(electionId);
+        
+        const electionPostId= localStorage.getItem("electionPostId")
         return await axios.get(`${BASE_URL}/election/posts?ElectionId=${electionId}`)
      }
      const query = useQuery({
@@ -21,31 +36,32 @@ const AddCandidates = ({onClose,isVisible}:any) => {
       queryKey: ['next'],
      })
      const mutation= useMutation({
-        mutationFn:fetchData,
+        mutationFn:sendData,
         mutationKey:["next"],
         onSuccess:(response)=>{
-            const token= response.data.data.token
-            console.log(token);
-            console.log("succes");
+            onClose()
+            setTimeout(()=>{
+                toast.success("Candidate added");
+            },1000)
         },
         onError:(e:any)=>{
             toast.error("error occured")
         }
     })
     const submit=()=>{
-        // mutation.mutate({electionPostId,name,image:{
-        //     "link": "https://example.com/images/janesmith.png",
-        //     "id": "xyz456",
-        //     "extension": "png",
-        // },bio,electionId} as any)
+        mutation.mutate({electionPostId,name,image:{
+            "link": "https://example.com/images/janesmith.png",
+            "id": "xyz456",
+            "extension": "png",
+        },bio,electionId} as any)
         console.log({electionPostId,name,image:{
             "link": "https://example.com/images/janesmith.png",
             "id": "xyz456",
             "extension": "png",
         },bio,electionId} as any)
-        onClose()
+        router.refresh()
     }
-   console.log( query?.data?.data?.data?.election_posts);
+//    console.log( query?.data?.data?.data?.election_posts);
    
         const handleClose=(e:any)=>{
           if(e.target.id==="wrapper") onClose()
@@ -62,7 +78,7 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                 <label className=' md:mx-[12%] mx-[8%] font-[Satoshi] flex flex-col gap-3 items-start '>
                     Election post 
                     
-                    <select className=' outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
+                    <select value={electionPostId} onChange={(e)=>setElectionPostId(e.target.value)} className=' outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
                     {query?.data?.data?.data?.election_posts.map(
                         (post:any)=>{
                             return <option key={post.id} value={post.id}>{post.title}</option>

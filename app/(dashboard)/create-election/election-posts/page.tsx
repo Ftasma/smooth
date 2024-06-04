@@ -21,7 +21,9 @@ const Page = () => {
         mutationFn: sendData,
         mutationKey: ["next"],
         onSuccess: (response) => {
+            localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)
             toast.success("Post added successfully");
+            // console.log(response?.data?.data?.election_post?.id);
             setTimeout(() => {
 
             }, 3000)
