@@ -26,7 +26,7 @@ const CreateElection2 = () => {
   const [showModal, setShowModal]= useState(false)
   return (
     <>
-    <div className=' h-[100%] w-full '>
+    <div className=' h-screen w-full '>
         
         <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
         <aside className='dashboard-dimensions'>
@@ -38,7 +38,7 @@ const CreateElection2 = () => {
                 <span className=' z-50 rounded-full flex items-center justify-center bg-[#0654B0] p-3 px-6 w-9 text-white'><p className=' place-self-center'>3</p></span>
             </div>
             <div className=' border-[#BCBCBC] border w-[65%] mx-auto border-dotted -mt-8'/>
-            <div className=' md:overflow-y-auto no-scrollbar ml-[20%] w-full place-self-center'>
+            <div className='overflow-y-auto no-scrollbar ml-[20%] w-full place-self-center'>
             {query?.data?.data?.data?.candidates?.map((candidate:any)=>(
               <div key={candidate.id} className='mt-6 place-self-center h-16 flex justify-between  items-center px-3 rounded-xl w-[80%] border-2 border-blue-500 '>
               <div className=' w-[70%] flex justify-around items-center'>

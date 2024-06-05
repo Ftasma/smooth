@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
@@ -43,6 +43,9 @@ const AddCandidates = ({onClose,isVisible}:any) => {
             setTimeout(()=>{
                 toast.success("Candidate added");
             },1000)
+            // useEffect(() => {
+            //     router.refresh();
+            //   }, []);
         },
         onError:(e:any)=>{
             toast.error("error occured")
@@ -59,7 +62,7 @@ const AddCandidates = ({onClose,isVisible}:any) => {
             "id": "xyz456",
             "extension": "png",
         },bio,electionId} as any)
-        router.refresh()
+        
     }
 //    console.log( query?.data?.data?.data?.election_posts);
    
