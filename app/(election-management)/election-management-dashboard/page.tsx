@@ -5,7 +5,7 @@ import { Calendar, ChevronLeft, Clock, Pencil, ToggleLeft } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const Page = () => {
     const [electionName, setElectionName]= useState("")
     const [electionDate, setElectionDate]= useState("")
     useEffect(() => {
@@ -69,4 +69,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
