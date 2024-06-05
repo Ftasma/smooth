@@ -12,9 +12,10 @@ const Page = () => {
         const electionId = localStorage.getItem('electionId');
         const name = localStorage.getItem('electionName');
         const electionDate = localStorage.getItem('electionDate');
+        const date = new Date(electionDate as any)
         console.log(electionId, electionName);
         setElectionName(name as any)
-        setElectionDate(electionDate as any)
+        setElectionDate(date as any)
       }, []);
   return (
     <section className='h-[500vh]  p-3'>
@@ -36,32 +37,32 @@ const Page = () => {
         </div>
         <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white p-6'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
-            <div className=' h-[20%] rounded border-[1px] mt-3 w-full border-[#B1B2B2]'>
-                <div className=' flex justify-between w-full px-6 gap-4 pt-6'>
-                    <label className='w-full flex flex-col justify-between relative'>
-                        Election name
-                        <Input className='rounded  bg-[#D2D3D3]' disabled placeholder={electionName}/>
-                        <Pencil size={15} className=' absolute right-2 top-9'/>
+            <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2]'>
+                <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6'>
+                    <label className='w-full flex flex-col justify-between relative gap-2'>
+                        <p>Election name</p>
+                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionName}/>
+                        <Pencil size={15} className=' absolute right-2 top-11'/>
                     </label>
-                    <label className=' w-[80%] flex flex-col justify-between relative'>
-                        Start time
-                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionDate}/>
-                        <Clock size={15} className=' absolute right-2 top-9'/>
-                    </label>
-                </div>
-                <div className=' flex justify-between w-full px-6 gap-4 pt-6'>
-                    <label className='w-full flex flex-col justify-between relative'>
-                        Election Date
+                    <label className='w-full flex flex-col justify-between relative gap-2'>
+                        <p>Election Date</p>
                          <Input className='rounded  bg-[#D2D3D3]' disabled placeholder={electionDate}/>
-                        <Calendar size={15} className=' absolute right-2 top-9'/>
-                    </label>
-                    <label className=' w-[80%] flex flex-col justify-between relative'>
-                    End Time
-                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionDate}/>
-                        <Clock size={15} className=' absolute right-2 top-9'/>
+                        <Calendar size={15} className=' absolute right-2 top-11'/>
                     </label>
                 </div>
-                <Button variant="ghost" className='bg-[#0654B0] text-white w-[20%] place-self-start mt-[2%] ml-[3%]'>Save</Button>
+                <div className=' flex justify-between w-full md:px-6 gap-4 pt-6'>
+                <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
+                        <p>Start time</p>
+                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionDate}/>
+                        <Clock size={15} className=' absolute right-2  top-11'/>
+                    </label>
+                    <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
+                        <p>End Time</p>
+                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionDate}/>
+                        <Clock size={15} className=' absolute right-2 top-11'/>
+                    </label>
+                </div>
+                <Button variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]'>Save</Button>
             </div>
 
         </aside>
