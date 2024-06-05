@@ -38,7 +38,7 @@ const Page = () => {
         <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white p-6'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2]'>
-                <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6'>
+                <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6 overflow-y-auto'>
                     <label className='w-full flex flex-col justify-between relative gap-2'>
                         <p>Election name</p>
                         <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionName}/>
