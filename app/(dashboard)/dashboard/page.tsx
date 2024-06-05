@@ -1,9 +1,10 @@
 "use client"
-import FirstTimeDisplay from '@/components/FirstTimeDisplay'
+
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import DisplayDashboard from './_components/DisplayDashboard'
+import FirstTimeDisplay from './_components/FirstTimeDisplay'
 
 const Dashboard = () => {
   const fetchData=async()=>{
