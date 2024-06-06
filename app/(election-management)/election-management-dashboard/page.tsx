@@ -91,8 +91,8 @@ const Page = () => {
                     <span className='-'>Action</span>
                 </div>
                     {query?.data?.data?.data?.election_posts.map((post:any, index:number)=>(
-                        <div className=''>
-                        <div key={post.id} className='w-[100%] mx-auto mt-6 flex justify-around items-center'>
+                        <div key={post.id} className=''>
+                        <div  className='w-[100%] mx-auto mt-6 flex justify-around items-center'>
                             <span className='-ml-[2%] font-bold  w-2'>{index+1}</span>
                             <span className='-ml-[5%] font-semibold max-w-3 text-sm'>{post.title}</span>
                             <span className='-mr-[10%] hidden md:block'>{post.Candidates.length}</span>
