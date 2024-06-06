@@ -5,15 +5,12 @@ import axios from 'axios'
 import { Plus } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { use, useEffect } from 'react'
 
 const DisplayDashboard = () => {
   const router = useRouter()
     const fetchData=()=>{
-      
-     
       return  axios.get(`${BASE_URL}/election`)
-        
      }
      const query = useQuery({
       queryFn: fetchData,
@@ -28,7 +25,7 @@ const DisplayDashboard = () => {
      }
      console.log(query?.data?.data?.data.elections);
   return (
-    <section className='flex flex-col gap-16 h-[100%] md:h-screen p-6'>
+    <section className='flex flex-col gap-16 h-[100%] md:h-[200vh] p-6'>
         <div className=' place-self-end'>
              <Link href="/create-election"><Button variant="ghost" className='bg-[#0654B0] text-white flex gap-2'><span><Plus size={18}/></span>Create new election</Button></Link>
         </div>
