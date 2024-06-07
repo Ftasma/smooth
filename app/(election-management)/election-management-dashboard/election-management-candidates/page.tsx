@@ -42,7 +42,7 @@ const page = () => {
           <div className=' mt-[5%]'>
             {
               query?.data?.data?.data?.election_posts?.map((post:any, index:number)=>(
-                <Accordion className='md:w-[90%] w-[95%] mx-auto border-[1px] border-[#B1B2B2] rounded px-3 mt-2' type="single" collapsible>
+                <Accordion key={post.id} className='md:w-[90%] w-[95%] mx-auto border-[1px] border-[#B1B2B2] rounded px-3 mt-2' type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger >{post.title}</AccordionTrigger>
                   <AccordionContent>
