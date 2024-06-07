@@ -34,14 +34,14 @@ const Page = () => {
      console.log(query?.data?.data?.data?.election_posts);
   return (
     <section className='h-[500vh]  p-3'>
-        <div className='flex'>
+        {/* <div className='flex'>
             <div className=' place-self-start flex justify-between items-center gap-6 pl-4 pt-4'>
                 <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
                 <h1 className=' text-2xl font-bold'>{electionName}</h1>
             </div>
             
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
         <div className=' flex justify-around items-center md:w-[50%] mt-7 gap-5 pl-4 pt-4'>
                 <p className='text-[#0654B0] underline text-sm'>Election info</p>
                 <p className='text-[#B1B2B2] text-sm '>Candidates</p>
@@ -49,7 +49,7 @@ const Page = () => {
                 <p className='text-[#B1B2B2] text-sm '>Payment</p>
             </div>
             <p className='opacity-0'>t</p>
-        </div>
+        </div> */}
         <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white p-6'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>

@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import ElectionName from "./_components/ElectionName";
 
 
 export default function RootLayout({
@@ -7,10 +8,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <main className="h-[100%] w-full bg-[#F6F6F6]">
       <Navbar/>
         <div className="pt-16 h-[100%]">
+          <ElectionName/>
         {children}
         </div>
     </main>

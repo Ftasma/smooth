@@ -6,6 +6,8 @@ import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+// import App from './Image'
+
 import { useRouter } from 'next/navigation'
 const AddCandidates = ({onClose,isVisible}:any) => {
     const sendData=(payload:any)=>{
@@ -105,6 +107,7 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                     Bio
                     <textarea value={bio} onChange={(e)=>setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
                     <Button variant="ghost" type='button' onClick={submit} className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
+                    {/* <App/> */}
                 </label>
             </aside>
         </div>
