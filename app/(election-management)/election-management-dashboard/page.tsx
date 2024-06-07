@@ -82,7 +82,10 @@ const Page = () => {
             </div>
 
             <aside className='md:h-[40%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
-                <Button variant="ghost" className='hidden md:flex bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]  gap-3'><Plus size={18}/>Add new post</Button>
+                <div className=' flex justify-between px-5'>
+                    <p className=' opacity-0'>j</p>
+                    <Button variant="ghost" className='hidden md:flex bg-[#0654B0] text-white w-[30%] place-self-end md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]  gap-3'><Plus size={18}/>Add new post</Button>
+                </div>
                 <h1 className=' place-self-start font-semibold md:hidden text-2xl mt-6'>Election posts</h1>
                 <div className='h-[5%] hidden md:flex border-[1px] border-[#797A7B] w-[95%] mx-auto mt-6  justify-around items-center'>
                     <span><p>S/N</p></span>
@@ -102,7 +105,8 @@ const Page = () => {
                             <hr className='w-[95%] mx-auto'/>
                         </div>
                     ))}
-            </aside>
+            </aside>                    
+                    <Button variant="ghost" className=' bg-[#0654B0] place-self-center md:hidden text-white w-[80%] md:mt-[2%] md:ml-[3%] mt-[6%] ml-[5%] gap-3'><Plus size={18}/>Add new post</Button>
         </aside>
     </section>
   )
