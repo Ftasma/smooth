@@ -1,4 +1,5 @@
 "use client"
+import AddCandidates from '@/components/AddCandidates'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../../components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { BASE_URL } from '@/lib/endpoints'
@@ -12,6 +13,7 @@ const Page = () => {
   const [electionName, setElectionName]= useState("")
   const [electionDate, setElectionDate]= useState("")
   const [isLoading, setIsloading]= useState(true)
+  const [showModal, setShowModal]= useState(false)
   useEffect(() => {
       const electionId = localStorage.getItem('electionId');
       const name = localStorage.getItem('electionName');
@@ -20,8 +22,10 @@ const Page = () => {
     }, []);
     const fetchData =async()=>{
       const electionPostId= localStorage.getItem("electionPostId")
+      
       const electionId= localStorage.getItem("electionId")
       return await axios.post(`${BASE_URL}/election/post/candidates`, {ElectionId:electionId})
+      
    }
    const query = useQuery({
     queryFn: fetchData,
@@ -33,7 +37,7 @@ const Page = () => {
         <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 overflow-y-auto'>
           <div className='flex justify-between md:px-3 px-6'>
             <h1 className='opacity-0 md:opacity-100 text-2xl font-semibold'>Candidates</h1>
-            <Button variant="ghost" className='flex gap-3 bg-[#0654B0] text-white place-self-end'><Plus size={18}/>Add new candidate</Button>
+            <Button onClick={()=>setShowModal(true)} variant="ghost" className='flex gap-3 bg-[#0654B0] text-white place-self-end'><Plus size={18}/>Add new candidate</Button>
           </div>
           <div className=' mt-[5%]'>
             {
@@ -49,6 +53,7 @@ const Page = () => {
             ))
               }
           </div>
+          <AddCandidates isVisible={showModal} onClose={()=>setShowModal(false)}/>
         </div>
     </section>
   )

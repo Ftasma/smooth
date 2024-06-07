@@ -5,7 +5,7 @@ import plus from "../../../public/2_Team V1 (1).png"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, PlusCircle, Trash } from 'lucide-react'
-import AddCandidates from '../_components/AddCandidates'
+import AddCandidates from '@/components/AddCandidates'
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
