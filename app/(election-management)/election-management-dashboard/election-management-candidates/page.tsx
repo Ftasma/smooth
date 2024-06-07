@@ -1,16 +1,12 @@
 "use client"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Plus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+
 
 const page = () => {
   const [electionName, setElectionName]= useState("")
