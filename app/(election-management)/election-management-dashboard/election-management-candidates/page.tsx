@@ -8,7 +8,7 @@ import { Plus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 
-const page = () => {
+const Page = () => {
   const [electionName, setElectionName]= useState("")
   const [electionDate, setElectionDate]= useState("")
   const [isLoading, setIsloading]= useState(true)
@@ -54,4 +54,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
