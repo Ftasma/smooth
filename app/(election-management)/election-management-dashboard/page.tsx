@@ -152,16 +152,15 @@ const Page = () => {
                     <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0] place-self-center md:hidden text-white w-[80%] md:mt-[2%] md:ml-[3%] mt-[6%] ml-[5%] gap-3'><Plus size={18}/>Add new post</Button>
             </aside>                    
             {showModal&&(inputs.map(input => (
-                      <div className=' z-[9999] px-4 fixed inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
+                      <div key={input.id} className=' z-[9999] px-4 fixed inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
                         <button onClick={()=>setShowModal(false)} className='text-black rounded p-2 bg-white place-self-end'>X</button>
-                        <div className=' bg-white w-[80%] h-[60%]  pt-8  px-3'>
+                        <div  className=' bg-white w-[80%] h-[60%]  pt-8  px-3'>
                             <div className='w-full flex flex-col justify-center items-center'>
                             <Input
                                 value={input.value}
                                 onChange={(e) => handleInputChange(input.id, e.target.value)}
                                 placeholder='e.g, President'
                                 className='h-[58px] border-[#E5E5E5] placeholder:text-[#57595A]'
-                                key={input.id}
                                 id={`${input.id}`}
                                 disabled={!input.active}
                                 />
