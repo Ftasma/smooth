@@ -34,7 +34,7 @@ const Page = () => {
    console.log(query?.data?.data?.data?.election_posts);
   return (
     <section className='h-screen'>
-        <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 overflow-y-auto'>
+        <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 md:overflow-y-auto'>
           <div className='flex justify-between md:px-3 px-6'>
             <h1 className='opacity-0 md:opacity-100 text-2xl font-semibold'>Candidates</h1>
             <Button onClick={()=>setShowModal(true)} variant="ghost" className='flex gap-3 bg-[#0654B0] text-white place-self-end'><Plus size={18}/>Add new candidate</Button>
