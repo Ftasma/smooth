@@ -7,7 +7,17 @@ import axios from 'axios';
 import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
 const Page = () => {
     const [electionName, setElectionName]= useState("")
     const [electionDate, setElectionDate]= useState("")
@@ -117,8 +127,8 @@ const Page = () => {
   }
 
   return (
-    <section className='h-[500vh]  p-3'>
-        <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white p-6 relative'>
+    <section className='h-[500vh]  md:p-3'>
+        <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white md:p-6 p-2 relative'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
                 <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6 '>
@@ -167,16 +177,34 @@ const Page = () => {
                             <span className='-ml-[2%] font-bold  w-2'>{index+1}</span>
                             <span className='-ml-[5%] font-semibold max-w-3 text-sm'>{post.title}</span>
                             <span className='-mr-[10%] hidden md:block'>{post.Candidates.length}</span>
-                            <span className=' flex items-center gap-3'>
+                            <span className=' flex items-center gap-3 md:-mr-0 -mr-[10%]'>
                                 <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
-                                <Button onClick={() => deleteData(post.id)} className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="outline" className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This will permanently delete post
+                                            and remove your data from our servers.
+                                        </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={() => deleteData(post.id)}>Continue</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                                {/* <Button onClick={() => deleteData(post.id)} className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button> */}
                             </span>
                         </div>
                             {/* <div className='border-[0.2px] border-black'/> */}
                             <hr className='w-[95%] mx-auto'/>
                         </div>
                     ))}
-                    <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0] place-self-center md:hidden text-white w-[80%] md:mt-[2%] md:ml-[3%] mt-[6%] ml-[5%] gap-3'><Plus size={18}/>Add new post</Button>
+                    <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0]  md:hidden text-white ml-[12%] w-[80%] mt-[6%] gap-3'><Plus size={18}/>Add new post</Button>
             </aside>
             {showModal&&(inputs.map(input => (
                       <div key={input.id} className=' z-[9999] px-4 fixed   inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>

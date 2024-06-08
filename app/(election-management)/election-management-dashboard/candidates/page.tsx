@@ -8,7 +8,18 @@ import axios from 'axios'
 import { Loader2, Plus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-
+import toast from 'react-hot-toast'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 interface Candidate {
   id: string;
   name: string;
@@ -65,7 +76,15 @@ const Page = () => {
   //     query.refetch();
   //   }
   // }, [showModal, query]);
-  
+  const deleteData = async (id: any) => {
+    try {
+        await axios.delete(`${BASE_URL}/election/candidate/${id}`)
+        toast.success("Post deleted successfully")
+        query.refetch()
+    } catch (error) {
+        toast.error("Something went wrong while deleting the post")
+    }
+ }
   return (
     <section className='h-screen'>
       <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 md:overflow-y-auto'>
@@ -79,14 +98,31 @@ const Page = () => {
               <Accordion key={title} className='md:w-[90%] w-[95%] mx-auto border-[1px] border-[#B1B2B2] rounded px-3 mt-2' type="single" collapsible>
                 <AccordionItem value={title}>
                   <AccordionTrigger>{title}</AccordionTrigger>
-                  <AccordionContent className='h-[20%] md:p-2'>
+                  <AccordionContent className='h-[20%] md:p-2 mb-3'>
                     {candidates.map((candidate: Candidate) => (
                       <div key={candidate.id} className='flex justify-around w-[100%] mx-auto mt-6 items-center'>
                         <Image height={15} width={35} className='!h-10 !w-10 object-cover rounded-full' alt='Candidate image' src={candidate.image.link} />
                         <p className='max-w-3 text-sm text-wrap'>{candidate.name}</p>
                         <span className='flex items-center gap-3'>
                           <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
-                          <Button className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
+                          <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="outline" className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This will permanently delete candidate
+                                            and remove your data from our servers.
+                                        </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={() => deleteData(candidate.id)}>Continue</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                         </span>
                       </div>
                     ))}
