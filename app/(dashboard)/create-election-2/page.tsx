@@ -26,7 +26,7 @@ const CreateElection2 = () => {
   const [showModal, setShowModal]= useState(false)
   return (
     <>
-    <div className=' h-screen w-full '>
+    <div className=' h-[300vh] md:h-[100&] w-full '>
         
         <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
         <aside className='dashboard-dimensions'>
@@ -42,7 +42,9 @@ const CreateElection2 = () => {
             {query?.data?.data?.data?.candidates?.map((candidate:any)=>(
               <div key={candidate.id} className='mt-6 place-self-center h-16 flex justify-between  items-center px-3 rounded-xl w-[80%] border-2 border-blue-500 '>
               <div className=' w-[70%] flex justify-around items-center'>
-                <Image height={22} width={45} className=' object-cover' src={plus} alt='Candidate image'/>
+              
+                <Image height={15} width={35} className='!h-10 !w-10 object-cover  rounded-full ' src={`${candidate.image.link}`} alt='Candidate image'/>
+               
                 <h1>{candidate.name}</h1>
                 <p className=' text-xs bg-[#D9D9D9] text-black rounded px-1'>{candidate.ElectionPost.title}</p>
               </div>

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { BASE_URL } from '@/lib/endpoints';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Calendar, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
+import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -26,10 +26,9 @@ const Page = () => {
         mutationFn: sendData,
         mutationKey: ["next"],
         onSuccess: (response) => {
-            localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)
-            toast.success("Post added successfully");
-            // console.log(response?.data?.data?.election_post?.id);
+            localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)            
             setTimeout(() => {
+                toast.success("Post added successfully");
 
             }, 3000)
         },
@@ -152,19 +151,23 @@ const Page = () => {
                     <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0] place-self-center md:hidden text-white w-[80%] md:mt-[2%] md:ml-[3%] mt-[6%] ml-[5%] gap-3'><Plus size={18}/>Add new post</Button>
             </aside>                    
             {showModal&&(inputs.map(input => (
-                      <div key={input.id} className=' z-[9999] px-4 fixed inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
-                        <button onClick={()=>setShowModal(false)} className='text-black rounded p-2 bg-white place-self-end'>X</button>
-                        <div  className=' bg-white w-[80%] h-[60%]  pt-8  px-3'>
-                            <div className='w-full flex flex-col justify-center items-center'>
+                      <div key={input.id} className=' z-[9999] px-4 fixed   inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
+                        
+                        <div  className=' bg-white md:w-[40%] w-[95%] h-[30%] rounded pt-8  px-3'>
+                            <div className='w-full flex flex-col justify-center gap-5 items-center'>
+                                <div className='flex items-center w-[95%] gap-[30%]'>
+                                    <button onClick={()=>setShowModal(false)} className='text-black  p-2 bg-[#EAEAEA] rounded-full '><ChevronLeft/></button>
+                                    <p className='text-[#1F2223] '>Election post</p>
+                                </div>
                             <Input
                                 value={input.value}
                                 onChange={(e) => handleInputChange(input.id, e.target.value)}
                                 placeholder='e.g, President'
-                                className='h-[58px] border-[#E5E5E5] placeholder:text-[#57595A]'
+                                className='h-[58px] border-[#E5E5E5] placeholder:text-[#57595A] rounded w-[80%]'
                                 id={`${input.id}`}
                                 disabled={!input.active}
                                 />
-                                <Button onClick={handleAddInput} className='place-self-start border-2 border-[#0654B0] gap-x-2 text-[#0654B0] rounded'>
+                                <Button onClick={handleAddInput} className='place-self-center border-2 bg-[#0654B0B2] gap-x-2 text-white rounded w-[80%]'>
                                     <Plus size={17} />Add post
                                 </Button>
                                 </div>
