@@ -11,10 +11,10 @@ import toast from 'react-hot-toast';
 const Page = () => {
     const [electionName, setElectionName]= useState("")
     const [electionDate, setElectionDate]= useState("")
-    const [isLoading, setIsloading]= useState(true)
     const [title, setTitle] = useState('')
     const [showModal, setShowModal]= useState(false)
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
+
     const sendData = (payload: any) => {
         return axios.post(`${BASE_URL}/election/post`, {
             title: payload.title,
@@ -26,22 +26,32 @@ const Page = () => {
         mutationFn: sendData,
         mutationKey: ["next"],
         onSuccess: (response) => {
-            localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)            
-            setTimeout(() => {
+            localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)
+                query.refetch()
                 toast.success("Post added successfully");
 
-            }, 3000)
         },
         onError: (e: any) => {
             toast.error("something went wrong")
         }
     })
+
     const handleAddInput = () => {
         const electionId= localStorage.getItem("electionId")
         console.log(electionId);
-        
+
         const activeInput = inputs.find(input => input.active);
-        mutation.mutate({ title:activeInput?.value, ElectionId: electionId })
+        try {
+            mutation.mutate({ title:activeInput?.value, ElectionId: electionId })
+            toast.success("Post added successfully")
+            query.refetch()
+        }catch (error) {
+            toast.error("error")
+        }finally{
+            query.refetch()
+            setShowModal(false)
+        }
+        
 
         console.log(activeInput?.value);
         setInputs(prevInputs =>
@@ -50,11 +60,13 @@ const Page = () => {
         );
         setTitle('');
     }
+
     const handleInputChange = (id: number, value: string) => {
         setInputs(prevInputs =>
             prevInputs.map(input => input.id === id ? { ...input, value } : input)
         );
     }
+
     useEffect(() => {
         const electionId = localStorage.getItem('electionId');
         const name = localStorage.getItem('electionName');
@@ -64,35 +76,48 @@ const Page = () => {
         setElectionName(name as any)
         setElectionDate(date as any)
       }, []);
-      const fetchData =async()=>{
-        const electionPostId= localStorage.getItem("electionPostId")
+
+    const fetchData = async () => {
         const electionId= localStorage.getItem("electionId")
-        return await axios.post(`${BASE_URL}/election/post/candidates`, {ElectionId:electionId})
-        setIsloading(false)
+        const response = await axios.post(`${BASE_URL}/election/post/candidates`, {ElectionId:electionId})
+        return response;
      }
+
      const query = useQuery({
       queryFn: fetchData,
       queryKey: ['something'],
      })
+
      console.log(query?.data?.data?.data?.election_posts);
+
+     const deleteData = async (id: any) => {
+        try {
+            await axios.delete(`${BASE_URL}/election/post/${id}`)
+            toast.success("Post deleted successfully")
+            query.refetch()
+        } catch (error) {
+            toast.error("Something went wrong while deleting the post")
+        }
+     }
+
+  if (query.isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="animate-spin" size={48} />
+      </div>
+    )
+  }
+
+  if (query.isError) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Error loading data</p>
+      </div>
+    )
+  }
+
   return (
     <section className='h-[500vh]  p-3'>
-        {/* <div className='flex'>
-            <div className=' place-self-start flex justify-between items-center gap-6 pl-4 pt-4'>
-                <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
-                <h1 className=' text-2xl font-bold'>{electionName}</h1>
-            </div>
-            
-        </div> */}
-        {/* <div>
-        <div className=' flex justify-around items-center md:w-[50%] mt-7 gap-5 pl-4 pt-4'>
-                <p className='text-[#0654B0] underline text-sm'>Election info</p>
-                <p className='text-[#B1B2B2] text-sm '>Candidates</p>
-                <p className='text-[#B1B2B2] text-sm '>Voters</p>
-                <p className='text-[#B1B2B2] text-sm '>Payment</p>
-            </div>
-            <p className='opacity-0'>t</p>
-        </div> */}
         <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white p-6 relative'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
@@ -120,7 +145,7 @@ const Page = () => {
                         <Clock size={15} className=' absolute right-2 top-11'/>
                     </label>
                 </div>
-                
+
                 <Button variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]'>Save</Button>
             </div>
 
@@ -142,17 +167,20 @@ const Page = () => {
                             <span className='-ml-[2%] font-bold  w-2'>{index+1}</span>
                             <span className='-ml-[5%] font-semibold max-w-3 text-sm'>{post.title}</span>
                             <span className='-mr-[10%] hidden md:block'>{post.Candidates.length}</span>
-                            <span className=' flex items-center gap-3'><Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button><Button className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button></span>
+                            <span className=' flex items-center gap-3'>
+                                <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
+                                <Button onClick={() => deleteData(post.id)} className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
+                            </span>
                         </div>
                             {/* <div className='border-[0.2px] border-black'/> */}
                             <hr className='w-[95%] mx-auto'/>
                         </div>
                     ))}
                     <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0] place-self-center md:hidden text-white w-[80%] md:mt-[2%] md:ml-[3%] mt-[6%] ml-[5%] gap-3'><Plus size={18}/>Add new post</Button>
-            </aside>                    
+            </aside>
             {showModal&&(inputs.map(input => (
                       <div key={input.id} className=' z-[9999] px-4 fixed   inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
-                        
+
                         <div  className=' bg-white md:w-[40%] w-[95%] h-[30%] rounded pt-8  px-3'>
                             <div className='w-full flex flex-col justify-center gap-5 items-center'>
                                 <div className='flex items-center w-[95%] gap-[30%]'>

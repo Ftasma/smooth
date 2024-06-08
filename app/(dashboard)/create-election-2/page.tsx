@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import plus from "../../../public/2_Team V1 (1).png"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -24,6 +24,11 @@ const CreateElection2 = () => {
  console.log(query?.data?.data?.data?.candidates);
  
   const [showModal, setShowModal]= useState(false)
+  useEffect(() => {
+    if (!showModal) {
+      query.refetch();
+    }
+  }, [showModal, query]);
   return (
     <>
     <div className=' h-[300vh] md:h-[100&] w-full '>
@@ -41,14 +46,14 @@ const CreateElection2 = () => {
             <div className='overflow-y-auto no-scrollbar ml-[20%] w-full place-self-center'>
             {query?.data?.data?.data?.candidates?.map((candidate:any)=>(
               <div key={candidate.id} className='mt-6 place-self-center h-16 flex justify-between  items-center px-3 rounded-xl w-[80%] border-2 border-blue-500 '>
-              <div className=' w-[70%] flex justify-around items-center'>
+              <div className=' w-[70%] flex md:justify-around justify-between items-center'>
               
                 <Image height={15} width={35} className='!h-10 !w-10 object-cover  rounded-full ' src={`${candidate.image.link}`} alt='Candidate image'/>
                
-                <h1>{candidate.name}</h1>
-                <p className=' text-xs bg-[#D9D9D9] text-black rounded px-1'>{candidate.ElectionPost.title}</p>
+                <h1 className='max-w-3'>{candidate.name}</h1>
+                <p className=' max-w-16 text-xs bg-[#D9D9D9] text-black rounded px-1 -mr-[30%] md:-mr-0'>{candidate.ElectionPost.title}</p>
               </div>
-              <div className=' pr-2 pb-1'>
+              <div className=' pr-2 pb-1 hidden md:block'>
                 <h2 className=' text-gray-400'>...</h2>
               </div>
              </div>
