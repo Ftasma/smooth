@@ -1,16 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-
-
+import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation'
-import App from '@/app/(dashboard)/_components/Image'
-import ImageComp from '@/app/(dashboard)/_components/Image'
+import { fileUploadInstance } from './ClientSetup'
 const AddCandidates = ({onClose,isVisible}:any) => {
     const sendData=(payload:any)=>{
        
@@ -25,9 +22,33 @@ const AddCandidates = ({onClose,isVisible}:any) => {
     const router = useRouter()
     const [electionPostId, setElectionPostId]=useState("")
     const [name, setName]=useState("")
-    const [image, setImage]=useState({})
+   
     const [bio, setBio]=useState("")
     const [electionId, setElectionId]=useState(0)
+    const [file, setFile] = useState<any>();
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [image, setImage] = useState(0);
+  
+    function handleFileChange(e: any) {
+      e.preventDefault();
+      setFile(e.target.files[0]);
+    }
+  
+    // async function handleSubmit(e:any) {
+    //   e.preventDefault();
+    //   console.log(file);
+    //   console.log(file.name.split("."));
+    //   const key = uuidv4();
+    //   const response = await axios.get(
+    //     `https://sbxapi.smoothballot.com/storage/url?key=${key}`
+    //   );
+    //   console.log(file);
+      
+    //   const signed_upload_url = response.data.data.url;
+      
+    //   fileUploadInstance(signed_upload_url, file.type).put("", file);
+      
+    // }
     const fetchData=async()=>{
         const electionId= localStorage.getItem("electionId")
         setElectionId(Number(electionId))
@@ -48,19 +69,28 @@ const AddCandidates = ({onClose,isVisible}:any) => {
             setTimeout(()=>{
                 toast.success("Candidate added");
             },1000)
-            // useEffect(() => {
-            //     router.refresh();
-            //   }, []);
         },
         onError:(e:any)=>{
             toast.error("error occured")
         }
     })
-    const submit=()=>{
+    const submit=async()=>{
+        const key = uuidv4();
+        const response = await axios.get(
+          `https://sbxapi.smoothballot.com/storage/url?key=${key}`
+        );
+        console.log(file);
+        
+        const signed_upload_url = response.data.data.url;
+        
+        fileUploadInstance(signed_upload_url, file.type).put("", file);
+        const file_url = `https://smooth-ballot.s3.eu-north-1.amazonaws.com/${key}`;
+        const file_name_arr = file.name.split(".");
+        const extension = file_name_arr[file_name_arr.length - 1];
         mutation.mutate({electionPostId,name,image:{
-            "link": "https://example.com/images/janesmith.png",
-            "id": "xyz456",
-            "extension": "png",
+            "link": file_url,
+            "id": key,
+            "extension": extension,
         },bio,electionId} as any)
         console.log({electionPostId,name,image:{
             "link": "https://example.com/images/janesmith.png",
@@ -104,13 +134,20 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Image
-                    <input  placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="file"/>
+                    {/* <input  placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="file"/>
+                     */}
+                        <div className="App">
+                        <form >
+                            <input onChange={handleFileChange} type="file" />
+                            
+                        </form>
+                        </div>
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Bio
                     <textarea value={bio} onChange={(e)=>setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
                     <Button variant="ghost" type='button' onClick={submit} className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
-                    <ImageComp/>
+                    
                 </label>
             </aside>
         </div>
