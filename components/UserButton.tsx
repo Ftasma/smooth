@@ -34,6 +34,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from 'next/image';
+import { ModeToggle } from './DarkMode';
 const UserButton = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
 const router = useRouter()
@@ -65,6 +66,10 @@ const handleLogout = () => {
           <span>Settings</span>
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
+        {/* <DropdownMenuItem>
+          <Settings className="mr-2 h-4 w-4" />
+          <span><ModeToggle/></span>
+        </DropdownMenuItem> */}
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuItem>

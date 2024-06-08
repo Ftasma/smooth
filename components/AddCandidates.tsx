@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation'
 import { fileUploadInstance } from './ClientSetup'
+import { X } from 'lucide-react'
 const AddCandidates = ({onClose,isVisible}:any) => {
     const sendData=(payload:any)=>{
        
@@ -107,9 +108,9 @@ const AddCandidates = ({onClose,isVisible}:any) => {
         if(!isVisible) return null
   return (
     <div onClick={handleClose} id='wrapper' className='z-[9999] px-4 fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center '>
-        <div className=' flex flex-col w-full '>
-        <button onClick={onClose} className=' place-self-end opacity-100 pr-3 text-gray-500'>X</button>
-        <div className=' bg-white h-[80vh] w-[90%] bg-opacity-100 space-y-3 mx-auto overflow-y-auto  py-4 rounded'>
+        <div className=' flex flex-col w-full'>
+        <button onClick={onClose} className=' place-self-end opacity-100 pr-3 text-gray-500'><X/></button>
+        <div className=' bg-white h-[65vh] w-[80%] bg-opacity-100 space-y-3 mx-auto overflow-y-auto  py-4 rounded'>
             <h1 className=' text-center text-2xl'>Add Candidate</h1>
             <p className=' text-center'>Fill in the details below⚡</p>
             <aside className=' mt-12 space-y-3'>
