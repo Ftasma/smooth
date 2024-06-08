@@ -65,6 +65,7 @@ const Page = () => {
   //     query.refetch();
   //   }
   // }, [showModal, query]);
+  
   return (
     <section className='h-screen'>
       <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 md:overflow-y-auto'>

@@ -30,7 +30,7 @@ const ElectionName = () => {
             <div>
                 <div className='flex justify-around items-center md:w-[50%] mt-7 gap-5 pl-4 pt-4'>
                     <Link href="/election-management-dashboard" className={`${pathname === '/election-management-dashboard' ? 'underline text-[#0654B0]' : 'text-[#B1B2B2]'} text-sm `}>Election info</Link>
-                    <Link href="/election-management-dashboard/candidates" className={`${pathname === '/election-management-dashboard/election-management-candidates' ? 'underline text-[#0654B0]' : 'text-[#B1B2B2]'} text-sm`}>Candidates</Link>
+                    <Link href="/election-management-dashboard/candidates" className={`${pathname === '/election-management-dashboard/candidates' ? 'underline text-[#0654B0]' : 'text-[#B1B2B2]'} text-sm`}>Candidates</Link>
                     <Link href="/election-management-dashboard/voters" className={`${pathname === '/election-management-dashboard/voters' ? 'underline text-[#0654B0]' : 'text-[#B1B2B2]'}  text-sm `}>Voters</Link>
                     <Link href="/election-management-dashboard/payment" className={`${pathname === '/election-management-dashboard/payment' ? 'underline text-[#0654B0]' : 'text-[#B1B2B2]'}  text-sm `}>Payment</Link>
                 </div>
