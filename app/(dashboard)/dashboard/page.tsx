@@ -27,7 +27,7 @@ const Dashboard = () => {
   }
 
   if (query.isError) {
-    return <div>Error loading data</div>;
+    return <div className='flex justify-center items-center h-screen'>Error loading data</div>;
   }
 
   return (
