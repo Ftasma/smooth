@@ -60,7 +60,7 @@ const CreateElection2 = () => {
             ))}
             </div>
             <aside className=' mt-3 space-y-3'>
-                <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>
+                <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4 mt-[5%]'>
                 <PlusCircle onClick={()=>setShowModal(true)} className='cursor-pointer text-[#0654B0]' size={20}/>
                 <p className='text-[#57595A]'>Add candidate</p>
                 </div>
