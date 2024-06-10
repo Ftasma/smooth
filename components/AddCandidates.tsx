@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation'
 import { fileUploadInstance } from './ClientSetup'
-import { X } from 'lucide-react'
+import { ChevronLeft, Upload, X } from 'lucide-react'
 const AddCandidates = ({onClose,isVisible}:any) => {
     const sendData=(payload:any)=>{
        
@@ -109,8 +109,8 @@ const AddCandidates = ({onClose,isVisible}:any) => {
   return (
     <div onClick={handleClose} id='wrapper' className='z-[9999] px-4 fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center '>
         <div className=' flex flex-col w-full'>
-        <button onClick={onClose} className=' place-self-end opacity-100 pr-3 text-gray-500'><X/></button>
-        <div className=' bg-white h-[65vh] w-[80%] bg-opacity-100 space-y-3 mx-auto overflow-y-auto  py-4 rounded'>
+        <div className=' bg-white h-[75vh] w-[100%] bg-opacity-100 space-y-3 mx-auto overflow-y-auto  py-4 rounded'>
+        <button onClick={onClose} className=' ml-[5%] opacity-100 p-1 rounded-full shadow-lg  shadow-gray-500 text-gray-500'><ChevronLeft/></button>
             <h1 className=' text-center text-2xl'>Add Candidate</h1>
             <p className=' text-center'>Fill in the details below⚡</p>
             <aside className=' mt-12 space-y-3'>
@@ -133,16 +133,18 @@ const AddCandidates = ({onClose,isVisible}:any) => {
                     Name of candidate
                     <input value={name} onChange={(e)=>setName(e.target.value)} placeholder='John doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text"/>
                 </label>
-                <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
+                <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%] '>
                     Image
                     {/* <input  placeholder='Johnismydoe@gmail.com' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="file"/>
                      */}
-                        <div className="App">
-                        <form >
-                            <input onChange={handleFileChange} type="file" />
-                            
-                        </form>
+                        <div className="bg-[#EAEAEA] h-[48px] w-full flex justify-center items-center">
+                            <form className="flex justify-center items-center">
+                                <Upload size={35} className="ml-[45%] text-[#0654B0]" />
+                                <input className="opacity-0" onChange={handleFileChange} type="file" />
+                            </form>
                         </div>
+
+
                 </label>
                 <label className=' font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                     Bio
