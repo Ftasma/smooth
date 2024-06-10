@@ -45,8 +45,8 @@ const SignIn = () => {
             },3000)
         },
         onError:(e:any)=>{
-            toast.error(e?.response?.data?.message)
-            console.log(e?.response?.data?.message);
+            toast.error(e?.response?.data?.message?e?.response?.data?.message:"An error occured, It's not you, it's us. Please try again later.")
+            console.log(e?.response?.data?.message?e?.response?.data?.message:"An error occured");
         }
     })
     const submit=()=>{
