@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { Loader2, Plus } from 'lucide-react'
+import { Loader2, Plus, Upload } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
@@ -20,6 +20,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 interface Candidate {
   id: string;
   name: string;
@@ -50,7 +53,8 @@ const Page = () => {
     queryFn: fetchData,
     queryKey: ['candidates'],
   })
-
+  console.log(query.data?.data?.data?.candidates);
+  
   if (query.isLoading) {
     return <div className="flex justify-center items-center h-screen">
     <Loader2 className="animate-spin" size={48} />
@@ -79,10 +83,10 @@ const Page = () => {
   const deleteData = async (id: any) => {
     try {
         await axios.delete(`${BASE_URL}/election/candidate/${id}`)
-        toast.success("Post deleted successfully")
+        toast.success("Candidate deleted successfully")
         query.refetch()
     } catch (error) {
-        toast.error("Something went wrong while deleting the post")
+        toast.error("Something went wrong while deleting the Candidate")
     }
  }
   return (
@@ -104,8 +108,47 @@ const Page = () => {
                         <Image height={15} width={35} className='!h-10 !w-10 object-cover rounded-full' alt='Candidate image' src={candidate.image.link} />
                         <p className='max-w-3 text-sm text-wrap'>{candidate.name}</p>
                         <span className='flex items-center gap-3'>
-                          <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
-                          <AlertDialog>
+                        <Dialog>
+                              <DialogTrigger asChild>
+                              <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px] h-[75vh] overflow-y-auto no-scrollbar">
+                                  <h1 className='text-center text-2xl'>Add Candidate</h1>
+                                  <p className='text-center'>Fill in the details below⚡</p>
+                                  <aside className='mt-12 space-y-3'>
+                                      <>
+                                        <label className='md:mx-[12%] mx-[8%] font-[Satoshi] flex flex-col gap-3 items-start '>
+                                          Election post 
+                                          <select className='outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
+                                          
+                                              <option> hsjss</option>
+                                       
+                                          </select>
+                                        </label>
+                                        <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
+                                          Name of candidate
+                                          <input  placeholder='John Doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text" />
+                                        </label>
+                                        <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%] '>
+                                          Image
+                                          <div className="bg-[#EAEAEA] h-[48px] w-full flex justify-center items-center">
+                                            <form className="flex justify-center items-center">
+                                              <Upload size={35} className="ml-[45%] text-[#0654B0]" />
+                                              <input className="opacity-0"  type="file" />
+                                            </form>
+                                          </div>
+                                        </label>
+                                        <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
+                                          Bio
+                                          <textarea  name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
+                                          <Button variant="ghost" type='button'  className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
+                                        </label>
+                                      </>
+                                  </aside>
+                              </DialogContent>
+                        </Dialog>
+                          
+                         <AlertDialog>
                                     <AlertDialogTrigger asChild>
                                         <Button variant="outline" className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
                                     </AlertDialogTrigger>
@@ -122,7 +165,7 @@ const Page = () => {
                                         <AlertDialogAction onClick={() => deleteData(candidate.id)}>Continue</AlertDialogAction>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
-                                </AlertDialog>
+                            </AlertDialog>
                         </span>
                       </div>
                     ))}
