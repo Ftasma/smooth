@@ -17,7 +17,7 @@ const Dashboard = () => {
     queryKey: ['next'],
   });
 
-  const isElection = query?.data?.data?.data?.elections[0]?.name;
+  const isElection = query?.data?.data?.data?.elections.length
   console.log(isElection);
 
   if (query.isLoading) {
@@ -32,10 +32,10 @@ const Dashboard = () => {
 
   return (
     <section>
-      {isElection ? (
-        <DisplayDashboard />
-      ) : (
+      {isElection===0 ? (
         <FirstTimeDisplay />
+        ) : (
+        <DisplayDashboard />
       )}
     </section>
   );

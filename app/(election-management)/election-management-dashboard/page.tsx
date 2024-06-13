@@ -6,8 +6,6 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
-import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import {
     Table,
@@ -152,8 +150,8 @@ const Page = () => {
   }
 
   return (
-    <section className='h-[500vh]  md:p-3'>
-        <aside className='mx-auto flex flex-col w-[95%] h-[200vh] md:bg-white md:p-6 p-2 relative'>
+    <section className=' h-auto md:p-3'>
+        <aside className='mx-auto flex flex-col w-[95%] h-auto md:bg-white md:p-6 p-2 relative'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
                 <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6 '>
