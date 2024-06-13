@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useMutation} from "@tanstack/react-query";
 import toast from 'react-hot-toast'
+import { useToast } from "@/components/ui/use-toast"
 
 const CreateElection = () => {
     const fetchData=(payload:any)=>{
@@ -19,6 +20,7 @@ const CreateElection = () => {
      const router = useRouter()
     const [name, setName]= useState("")
      const [date, setDate]= useState("")
+     const { toast } = useToast()
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
@@ -27,13 +29,17 @@ const CreateElection = () => {
             localStorage.setItem("electionId", response.data.data.election.id) 
             const token= response.data.data.token
             console.log(token);
-            toast.success("Election created successfully");
+            toast({
+                title: "Election created sucessfully",
+            })
             setTimeout(()=>{  
                router.push("/create-election/election-posts")
             },3000)
         },
         onError:(e:any)=>{
-            toast.error(e?.response?.data?.message)
+            toast({
+                title: e?.response?.data?.message
+            })
             console.log(e?.response?.data?.message);
         }
     })
@@ -47,8 +53,10 @@ const CreateElection = () => {
         mutation.mutate({name,date: new Date(date).toISOString()})
         console.log({name,date: new Date(date).toISOString()});
     }else{
-        toast.error("Please fill in all fields")
-    
+        toast({
+            variant:"destructive",
+            title: "Please fill in all fields",
+        })
     }
     }
   return (

@@ -8,8 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation';
 import { fileUploadInstance } from './ClientSetup';
 import { ChevronLeft, Upload } from 'lucide-react';
-
+import { useToast } from "@/components/ui/use-toast"
 const AddCandidates = ({ onClose, isVisible }: any) => {
+  const { toast } = useToast()
   const sendData = (payload: any) => {
     return axios.post(`${BASE_URL}/election/candidate`, {
       ElectionPostId: payload.electionPostId,
@@ -52,11 +53,16 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
     onSuccess: (response) => {
       onClose();
       setTimeout(() => {
-        toast.success("Candidate added");
+        toast({
+          title: "Candidate added sucessfully",
+      })
       }, 1000);
     },
     onError: (e: any) => {
-      toast.error("error occurred");
+      toast({
+        variant:"destructive",
+        title: "An error occured",
+    })
     }
   });
 

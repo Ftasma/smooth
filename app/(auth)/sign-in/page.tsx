@@ -12,6 +12,7 @@ import { useCookies } from "react-cookie"
 import { BASE_URL } from "@/lib/endpoints"
 import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
+import { useToast } from "@/components/ui/use-toast"
 import { Eye, EyeOff } from "lucide-react"
 const SignIn = () => {
     const [ cookie, setCookie ] = useCookies();
@@ -26,6 +27,7 @@ const SignIn = () => {
      const [password, setPassword]= useState("")
      const [isLoading, setIsloading]= useState(false)
      const [showPassword, setShowPassword] = useState(false)
+    //  const { toast } = useToast()
      const mutation= useMutation({
         mutationFn:fetchData,
         mutationKey:["next"],
@@ -45,6 +47,9 @@ const SignIn = () => {
             },3000)
         },
         onError:(e:any)=>{
+            // toast({
+            //     title: "sbjbjbjbj"
+            // })
             toast.error(e?.response?.data?.message?e?.response?.data?.message:"An error occured, It's not you, it's us. Please try again later.")
             console.log(e?.response?.data?.message?e?.response?.data?.message:"An error occured");
         }

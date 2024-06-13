@@ -8,8 +8,9 @@ import { ChevronLeft, Plus } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-
+import { useToast } from "@/components/ui/use-toast"
 const Page = () => {
+    const { toast } = useToast()
     const sendData = (payload: any) => {
         return axios.post(`${BASE_URL}/election/post`, {
             title: payload.title,
@@ -22,21 +23,26 @@ const Page = () => {
         mutationKey: ["next"],
         onSuccess: (response) => {
             localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)
-            toast.success("Post added successfully");
+            toast({
+                title: "Post added",
+            })
             // console.log(response?.data?.data?.election_post?.id);
             setTimeout(() => {
 
             }, 3000)
         },
         onError: (e: any) => {
-            toast.error("something went wrong")
+            toast({
+                variant:"destructive",
+                title: "something went wrong",
+            })
         }
     })
     
 
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
     const [title, setTitle] = useState('')
-
+    
     const handleAddInput = () => {
         const electionId= localStorage.getItem("electionId")
         console.log(electionId);
