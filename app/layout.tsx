@@ -31,8 +31,8 @@ export default function RootLayout({
       <Providers>
        <ClientSetup/>
        <ToastProvider/>
-       <Toaster />
         {children}
+       <Toaster />
 
       </Providers>
        

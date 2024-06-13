@@ -11,9 +11,9 @@ const InputComp: React.FC<InputCompProps> = ({ id, onDelete }) => {
               <p className=' place-self-start text-[#1F2223]'>Label</p>
               <div className=' flex justify-between items-center'>
                 <Input placeholder='Input your label e.g “Name”' className=' bg-[#EAEAEA] border-none w-[50%] rounded placeholder:text-[#57595A]'/>
-                <div className='md:w-[30%] w-[45%] border-2'>
-                <select name="" className='text-[#57595A] md:w-[30%] w-[45%] border-none' id="">
-                  <option value="">Short Answer</option>
+                <div className='md:w-[30%] w-[45%] border-2 h-10 rounded'>
+                <select name="" className='text-[#57595A] bg-inherit md:w-[30%] w-[45%]  border-none h-10 rounded-lg' id="">
+                  <option className=' text-xs' value="">Short Answer</option>
                 </select>
                 </div>
               </div>
