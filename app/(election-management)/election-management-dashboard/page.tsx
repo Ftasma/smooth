@@ -8,6 +8,16 @@ import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
+import {
     AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
@@ -160,56 +170,62 @@ const Page = () => {
             </div>
 
             <aside className='md:h-[40%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
-                <div className=' flex justify-between px-5'>
-                    <p className=' opacity-0'>j</p>
-                    <Button onClick={()=>setShowModal(true)} variant="ghost" className='hidden md:flex bg-[#0654B0] text-white w-[30%] place-self-end md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]  gap-3'><Plus size={18}/>Add new post</Button>
-                </div>
-                <h1 className=' place-self-start font-semibold md:hidden text-2xl mt-6'>Election posts</h1>
-                <div className='h-[5%] hidden md:flex border-[1px] border-[#797A7B] w-[95%] mx-auto mt-6  justify-around items-center'>
-                    <span><p>S/N</p></span>
-                    <span> <p>Election Post</p></span>
-                    <span>Number of candidates</span>
-                    <span className='-'>Action</span>
-                </div>
-                    {query?.data?.data?.data?.election_posts.map((post:any, index:number)=>(
-                        <div key={post.id} className=''>
-                        <div  className='w-[100%] mx-auto mt-6 flex justify-around items-center'>
-                            <span className='-ml-[2%] font-bold  w-2'>{index+1}</span>
-                            <span className='-ml-[5%] font-semibold max-w-3 text-sm'>{post.title}</span>
-                            <span className='-mr-[10%] hidden md:block'>{post.Candidates.length}</span>
-                            <span className=' flex items-center gap-3 md:-mr-0 -mr-[10%]'>
-                                <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0] w-[50%]'>Edit</Button>
-                                <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                        <Button variant="outline" className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            This action cannot be undone. This will permanently delete post
-                                            and remove your data from our servers.
-                                        </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction onClick={() => deleteData(post.id)}>Continue</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                                {/* <Button onClick={() => deleteData(post.id)} className='rounded bg-[#B00505] text-white w-[50%]'>Delete</Button> */}
-                            </span>
-                        </div>
-                            {/* <div className='border-[0.2px] border-black'/> */}
-                            <hr className='w-[95%] mx-auto'/>
-                        </div>
-                    ))}
-                    <Button onClick={()=>setShowModal(true)} variant="ghost" className=' bg-[#0654B0]  md:hidden text-white ml-[12%] w-[80%] mt-[6%] gap-3'><Plus size={18}/>Add new post</Button>
-            </aside>
-            {showModal&&(inputs.map(input => (
+    <div className='flex justify-between px-5'>
+        <p className='opacity-0'>j</p>
+        <Button onClick={() => setShowModal(true)} variant="ghost" className='hidden md:flex bg-[#0654B0] text-white w-[30%] place-self-end md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%] gap-3'><Plus size={18} />Add new post</Button>
+    </div>
+    <h1 className='place-self-start font-semibold md:hidden text-2xl mt-6'>Election posts</h1>
+    
+    <Table className='mt-3'>
+        <TableHeader className='border-[1px] bg-[#F6F6F6]'>
+            <TableRow className=''>
+                <TableHead className="">S/N</TableHead>
+                <TableHead>Post</TableHead>
+                <TableHead className=' text-center'>Candidates</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+    {query?.data?.data?.data?.election_posts.map(({ id, title, Candidates }: any, index: number) => (
+        <TableRow key={id} className=''>
+            <TableCell className="font-medium">{index + 1}</TableCell>
+            <TableCell className=''>{title}</TableCell>
+            <TableCell className='text-center'>{Candidates.length}</TableCell>
+            <TableCell className="">
+                <span className='items-center flex gap-2 justify-end'>
+                    <Button className='rounded bg-white border-[#0654B0] border-[1px] text-[#0654B0]'>Edit</Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="outline" className='rounded bg-[#B00505] text-white'>Delete</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete post
+                                    and remove your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => deleteData(id)}>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </span>
+            </TableCell>
+        </TableRow>
+    ))}
+</TableBody>
+
+    </Table>
+    <Button onClick={() => setShowModal(true)} variant="ghost" className='bg-[#0654B0] md:hidden text-white ml-[12%] w-[80%] mt-[6%] gap-3'><Plus size={18} />Add new post</Button>
+</aside>
+
+{showModal&&(inputs.map(input => (
                       <div key={input.id} className=' z-[9999] px-4 fixed   inset-0 bg-black bg-opacity-25 flex flex-col backdrop-blur-sm  justify-center items-center '>
 
-                        <div  className=' bg-white md:w-[40%] w-[95%] h-[30%] rounded pt-8  px-3'>
+                        <div  className=' bg-white md:w-[40%] w-[95%] h-[35%] rounded pt-8  px-3'>
                             <div className='w-full flex flex-col justify-center gap-5 items-center'>
                                 <div className='flex items-center w-[95%] gap-[30%]'>
                                     <button onClick={()=>setShowModal(false)} className='text-black  p-2 bg-[#EAEAEA] rounded-full '><ChevronLeft/></button>
