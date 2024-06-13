@@ -129,6 +129,7 @@ const Page = () => {
             query.refetch()
         } catch (error) {
             toast({
+               
                 variant:"destructive",
                 title: "Something went wrong while deleting the post",
             })
