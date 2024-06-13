@@ -108,6 +108,7 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
                 <label className='md:mx-[12%] mx-[8%] font-[Satoshi] flex flex-col gap-3 items-start '>
                   Election post 
                   <select value={electionPostId} onChange={(e) => setElectionPostId(e.target.value)} className='outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
+                    <option value="">Select post</option>
                     {data?.data?.data?.election_posts.map((post: any) => (
                       <option key={post.id} value={post.id}>{post.title}</option>
                     ))}

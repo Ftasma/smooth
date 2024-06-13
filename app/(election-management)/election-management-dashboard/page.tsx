@@ -28,11 +28,15 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+import { log } from 'console';
 const Page = () => {
     const [electionName, setElectionName]= useState("")
+    const [electionId, setElectionId]= useState(0)
     const [electionDate, setElectionDate]= useState("")
     const [title, setTitle] = useState('')
     const [showModal, setShowModal]= useState(false)
+    const [startTime, setStartTime]= useState("")
+    const [endTime, setEndTime]= useState("")
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
     const { toast } = useToast()
     const sendData = (payload: any) => {
@@ -132,7 +136,37 @@ const Page = () => {
             })
         }
      }
-
+     const saveElection= async ()=>{
+        try {
+            const currentDate = new Date(electionDate).toISOString().split('T')[0]; // Extract the date part
+            const formattedStartTime = new Date(`${currentDate}T${startTime}`).toISOString();
+            const formattedEndTime = new Date(`${currentDate}T${endTime}`).toISOString();
+    
+            // Log the formatted times to check for validity
+            console.log('Formatted Start Time:', formattedStartTime);
+            console.log('Formatted End Time:', formattedEndTime);
+    
+            await axios.patch(`${BASE_URL}/election`, {
+                name: electionName,
+                election_date: electionDate,
+                start_time: formattedStartTime,
+                end_time: formattedEndTime,
+                id: localStorage.getItem("electionId")
+            });
+            toast({
+                title: "Election saved sucessfully",
+            })
+        } catch (error) {
+            if (error instanceof RangeError) {
+                console.error('Invalid time value:', { startTime, endTime });
+            }
+            console.log(error);
+            toast({
+                variant:"destructive",
+                title: "Something went wrong while saving the election",
+            })
+        }
+     }
   if (query.isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -157,29 +191,29 @@ const Page = () => {
                 <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6 '>
                     <label className='w-full flex flex-col justify-between relative gap-2'>
                         <p>Election name</p>
-                        <Input className='rounded bg-[#D2D3D3]' disabled placeholder={electionName}/>
+                        <Input value={electionName} onChange={(e) => setElectionName(e.target.value)} className='rounded bg-[#D2D3D3]'/>
                         <Pencil size={15} className=' absolute right-2 top-11'/>
                     </label>
                     <label className='w-full flex flex-col justify-between relative gap-2'>
                         <p>Election Date</p>
-                         <Input className='rounded  bg-[#D2D3D3]' disabled placeholder={electionDate}/>
+                         <Input value={electionDate} onChange={(e)=>setElectionDate(e.target.value)} className='rounded  bg-[#D2D3D3]'/>
                         <Calendar size={15} className=' absolute right-2 top-11'/>
                     </label>
                 </div>
                 <div className=' flex justify-between w-full md:px-6 gap-4 pt-6'>
                 <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
                         <p>Start time</p>
-                        <Input className='rounded bg-[#D2D3D3]'  placeholder='e.g."9.00"'/>
-                        <Clock size={15} className=' absolute right-2  top-11'/>
+                        <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} className='rounded bg-[#D2D3D3]'  placeholder='e.g."9.00"'/>
+                        
                     </label>
                     <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
                         <p>End Time</p>
-                        <Input className='rounded bg-[#D2D3D3]'  placeholder='e.g."18.00"'/>
-                        <Clock size={15} className=' absolute right-2 top-11'/>
+                        <Input type='time' value={endTime} onChange={(e) => setEndTime(e.target.value)} className='rounded bg-[#D2D3D3]'  placeholder='e.g."18.00"'/>
+                       
                     </label>
                 </div>
 
-                <Button variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]'>Save</Button>
+                <Button onClick={saveElection} variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]'>Save</Button>
             </div>
 
             <aside className='md:h-[40%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>

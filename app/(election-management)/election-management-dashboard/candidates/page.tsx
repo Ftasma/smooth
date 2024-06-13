@@ -38,10 +38,11 @@ interface Candidate {
     title: string;
   };
   bio: string;
+  ElectionPostId: number;
 }
 
 const Page = () => {
-  const [electionPostId, setElectionPostId] = useState("");
+  const [electionPostId, setElectionPostId] = useState(0);
   const [electionName, setElectionName] = useState("")
   const [isLoading, setIsLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -52,6 +53,7 @@ const Page = () => {
   const [electionId, setElectionId] = useState(0);
   const sendData = (payload: any) => {
     return axios.post(`${BASE_URL}/election/candidate`, {
+      ...( editingCandidate?.id ? { id: editingCandidate.id } : {}),
       ElectionPostId: payload.electionPostId,
       name: payload.name,
       image: payload.image,
@@ -122,39 +124,56 @@ const Page = () => {
   setFile(e.target.files[0]);
 }
  const handleEdit = (candidate: Candidate) => {
+    setName(candidate.name);
+    setBio(candidate.bio);
+    setElectionPostId(candidate.ElectionPostId);
     setEditingCandidate(candidate);
  }
 
- const submit = async () => {
+ async function uploadImage(){
   const key = uuidv4();
-    const response = await axios.get(`https://sbxapi.smoothballot.com/storage/url?key=${key}`);
-    const signed_upload_url = response.data.data.url;
-    fileUploadInstance(signed_upload_url, file.type).put("", file);
-    const file_url = `https://smooth-ballot.s3.eu-north-1.amazonaws.com/${key}`;
-    const file_name_arr = file.name.split(".");
-    const extension = file_name_arr[file_name_arr.length - 1];
+  const response = await axios.get(`https://sbxapi.smoothballot.com/storage/url?key=${key}`);
+  const signed_upload_url = response.data.data.url;
+  fileUploadInstance(signed_upload_url, file.type).put("", file);
+  const file_url = `https://smooth-ballot.s3.eu-north-1.amazonaws.com/${key}`;
+  const file_name_arr = file.name.split(".");
+  const extension = file_name_arr[file_name_arr.length - 1];
+
+  return {
+    link: file_url,
+    id: key,
+    extension
+  }
+
+ }
+
+ const submit = async () => {
+
+  console.log(editingCandidate?.id)
+
+  let image = editingCandidate?.image;
+
+  if( file ) image = await uploadImage();
+   
   mutation.mutate({
+    id: editingCandidate?.id,
     electionPostId,
     name,
-    image: {
-      "link": file_url,
-      "id": key,
-      "extension": extension,
-    },
+    image,
     bio,
-    electionId
+    electionId: parseInt(localStorage.getItem("electionId") as string )
   } as any);
-  console.log({
-    electionPostId,
-    name,
-    image: {
-      "link": file_url,
-      "id": key,
-      "extension": extension,
-    },
-    bio,
-    electionId
-  } as any);
+  // console.log({
+  //   electionPostId,
+  //   name,
+  //   image: {
+  //     "link": file_url,
+  //     "id": key,
+  //     "extension": extension,
+  //   },
+  //   bio,
+  //   electionId
+  // } as any);
   
 };
  const handleClose = () => {
@@ -185,10 +204,9 @@ const Page = () => {
                           </TableRow>
                       </TableHeader>
                       <TableBody>
-
+                        
                     {candidates.map((candidate: Candidate,index: number) => (
                       <TableRow key={candidate.id} >
-                      
                         <TableCell className=' font-medium'>{index+1}</TableCell>
                        <TableCell> <Image height={55} width={65} className='!h-[55px] !w-[55px] object-cover rounded' alt='Candidate image' src={candidate.image.link} /></TableCell>
                         <TableCell className='text-center'><p className=' text-sm text-wrap'>{candidate.name}</p></TableCell>
@@ -211,18 +229,21 @@ const Page = () => {
                                           <select value={editingCandidate.ElectionPost.title} className='outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
                                           
                                               <option> {editingCandidate.ElectionPost.title}</option>
-                                       
+                                        
                                           </select>
                                         </label>
                                         <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                                           Name of candidate
-                                          <input value={editingCandidate.name} onChange={(e) => setName(e.target.value)} placeholder='John Doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text" />
+                                          <input value={name} onChange={(e) => setName(e.target.value)} placeholder='John Doe' className='w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' type="text" />
                                         </label>
                                         <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%] '>
                                           Image
                                           <div className="bg-[#EAEAEA] h-[48px] w-full flex justify-center items-center">
                                             {editingCandidate.image?.link ? (
-                                              <Image height={15} width={35} className='!h-10 !w-10 object-cover rounded-full' alt='Candidate image' src={editingCandidate.image.link} />
+                                              <>
+                                              <Image height={15} width={35} className='!h-10 mx-auto !w-10 object-cover rounded-full' alt='Candidate image' src={editingCandidate.image.link} />
+                                              <input className="opacity-0" onChange={handleFileChange} type="file" />
+                                              </>
                                               ) : (
                                                 <form className="flex justify-center items-center">
                                                 <Upload size={35} className="ml-[45%] text-[#0654B0]" />
@@ -233,7 +254,7 @@ const Page = () => {
                                         </label>
                                         <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                                           Bio
-                                          <textarea value={editingCandidate.bio} onChange={(e) => setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
+                                          <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
                                           <Button onClick={submit} variant="ghost" type='button' className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
                                         </label>
                                         </>
