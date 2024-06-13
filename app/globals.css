@@ -10,7 +10,7 @@
     height: 200px;
     border-radius: 10px;
     background-color: #eeeeee;
-    border: 3px dashed #0654B0;
+    border: 1px dashed #0654B0;
   }
   .dashboard-dimensions{
     @apply md:bg-[#FFFFFF] md:h-[80%] py-3 md:w-[60%] text-center mx-auto my-auto flex flex-col gap-3

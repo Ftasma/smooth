@@ -7,6 +7,8 @@ import axios from 'axios';
 import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 import {
     Table,
     TableBody,
@@ -34,7 +36,7 @@ const Page = () => {
     const [title, setTitle] = useState('')
     const [showModal, setShowModal]= useState(false)
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
-
+    const { toast } = useToast()
     const sendData = (payload: any) => {
         return axios.post(`${BASE_URL}/election/post`, {
             title: payload.title,
@@ -48,11 +50,16 @@ const Page = () => {
         onSuccess: (response) => {
             localStorage.setItem("electionPostId", response?.data?.data?.election_post?.id)
                 query.refetch()
-                toast.success("Post added successfully");
+                toast({
+                    title: "Post added sucessfully",
+                })
 
         },
         onError: (e: any) => {
-            toast.error("something went wrong")
+            toast({
+                variant:"destructive",
+                title: "Something went wrong",
+            })
         }
     })
 
@@ -63,10 +70,13 @@ const Page = () => {
         const activeInput = inputs.find(input => input.active);
         try {
             mutation.mutate({ title:activeInput?.value, ElectionId: electionId })
-            toast.success("Post added successfully")
+            
             query.refetch()
         }catch (error) {
-            toast.error("error")
+            toast({
+                variant:"destructive",
+                title: "Error",
+            })
         }finally{
             query.refetch()
             setShowModal(false)
@@ -113,10 +123,15 @@ const Page = () => {
      const deleteData = async (id: any) => {
         try {
             await axios.delete(`${BASE_URL}/election/post/${id}`)
-            toast.success("Post deleted successfully")
+            toast({
+                title: "Post deleted sucessfully",
+            })
             query.refetch()
         } catch (error) {
-            toast.error("Something went wrong while deleting the post")
+            toast({
+                variant:"destructive",
+                title: "Something went wrong while deleting the post",
+            })
         }
      }
 

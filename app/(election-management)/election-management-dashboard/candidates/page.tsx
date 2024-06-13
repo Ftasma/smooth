@@ -190,7 +190,7 @@ const Page = () => {
                       <TableRow key={candidate.id} >
                       
                         <TableCell className=' font-medium'>{index+1}</TableCell>
-                       <TableCell> <Image height={15} width={35} className='!h-10 !w-10 object-cover rounded-full' alt='Candidate image' src={candidate.image.link} /></TableCell>
+                       <TableCell> <Image height={55} width={65} className='!h-[55px] !w-[55px] object-cover rounded' alt='Candidate image' src={candidate.image.link} /></TableCell>
                         <TableCell className='text-center'><p className=' text-sm text-wrap'>{candidate.name}</p></TableCell>
                         <TableCell>
 
