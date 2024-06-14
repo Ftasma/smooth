@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Loader2, Plus, Upload } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useToast } from "@/components/ui/use-toast"
 import Image from 'next/image'
 import { v4 as uuidv4 } from "uuid";
 
@@ -22,7 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { fileUploadInstance } from '@/components/ClientSetup'
@@ -51,6 +52,7 @@ const Page = () => {
   const [bio, setBio] = useState("");
   const [name, setName] = useState("");
   const [electionId, setElectionId] = useState(0);
+  const { toast } = useToast()
   const sendData = (payload: any) => {
     return axios.post(`${BASE_URL}/election/candidate`, {
       ...( editingCandidate?.id ? { id: editingCandidate.id } : {}),
@@ -64,13 +66,19 @@ const Page = () => {
    const mutation = useMutation({
   mutationFn: sendData,
   mutationKey: ["next"],
-  onSuccess: (response) => {
+  onSuccess: () => {
+    query.refetch()
     setTimeout(() => {
-      toast.success("Candidate updated");
+      toast({
+        title: "Candidate updated successfully",
+      })
     }, 1000);
   },
   onError: (e: any) => {
-    toast.error("error occurred");
+    toast({
+      variant:"destructive",
+      title: "An error occurred",
+    })
   }
 });
   useEffect(() => {
@@ -113,10 +121,15 @@ const Page = () => {
   const deleteData = async (id: any) => {
     try {
         await axios.delete(`${BASE_URL}/election/candidate/${id}`)
-        toast.success("Candidate deleted successfully")
+        toast({
+            title: "Candidate deleted successfully",
+        })
         query.refetch()
     } catch (error) {
-        toast.error("Something went wrong while deleting the Candidate")
+        toast({
+            variant:"destructive",
+            title: "An error occurred",
+        })
     }
  }
  function handleFileChange(e: any) {
@@ -241,7 +254,7 @@ const Page = () => {
                                           <div className="bg-[#EAEAEA] h-[48px] w-full flex justify-center items-center">
                                             {editingCandidate.image?.link ? (
                                               <>
-                                              <Image height={15} width={35} className='!h-10 mx-auto !w-10 object-cover rounded-full' alt='Candidate image' src={editingCandidate.image.link} />
+                                              <Image height={15} width={35} className='!h-10 ml-[45%] !w-10 object-cover rounded-full' alt='Candidate image' src={editingCandidate.image.link} />
                                               <input className="opacity-0" onChange={handleFileChange} type="file" />
                                               </>
                                               ) : (
@@ -255,7 +268,7 @@ const Page = () => {
                                         <label className='font-[Satoshi] flex flex-col gap-3 items-start mx-[8%] md:mx-[12%]'>
                                           Bio
                                           <textarea value={bio} onChange={(e) => setBio(e.target.value)} name="" className='w-[100%] h-[150px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] focus:outline-none px-2 placeholder:text-[#57595A]' id=""></textarea>
-                                          <Button onClick={submit} variant="ghost" type='button' className='bg-[#0654B0] text-white w-[100%]'>Continue</Button>
+                                          <DialogClose className=' w-[100%]'><Button onClick={submit} variant="ghost" type='button' className='bg-[#0654B0] text-white w-[100%]'>Continue</Button></DialogClose>
                                         </label>
                                         </>
                                       )}
@@ -294,7 +307,7 @@ const Page = () => {
             ))
           }
         </div>
-        <AddCandidates isVisible={showModal} onClose={() => setShowModal(false)} />
+        <AddCandidates isVisible={showModal} onClose={() => {setShowModal(false), query.refetch()}} />
       </div>
     </section>
   )

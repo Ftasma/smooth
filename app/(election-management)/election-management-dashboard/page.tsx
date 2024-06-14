@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { BASE_URL } from '@/lib/endpoints';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Calendar, ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
+import {  ChevronLeft, Clock, Loader2, Pencil, Plus, ToggleLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useToast } from "@/components/ui/use-toast"
 import {
@@ -29,7 +29,18 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { log } from 'console';
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+ 
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 const Page = () => {
+    const [date, setDate] = React.useState<Date>()
     const [electionName, setElectionName]= useState("")
     const [electionId, setElectionId]= useState(0)
     const [electionDate, setElectionDate]= useState("")
@@ -39,6 +50,7 @@ const Page = () => {
     const [endTime, setEndTime]= useState("")
     const [inputs, setInputs] = useState<{ id: any, value: string, active: boolean }[]>([{ id: 0, value: "", active: true }])
     const { toast } = useToast()
+
     const sendData = (payload: any) => {
         return axios.post(`${BASE_URL}/election/post`, {
             title: payload.title,
@@ -103,7 +115,11 @@ const Page = () => {
         const electionId = localStorage.getItem('electionId');
         const name = localStorage.getItem('electionName');
         const electionDate = localStorage.getItem('electionDate');
-        const date = new Date(electionDate as any)
+        const date = new Date(electionDate as any).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
         console.log(electionId, electionName);
         setElectionName(name as any)
         setElectionDate(date as any)
@@ -141,18 +157,19 @@ const Page = () => {
             const currentDate = new Date(electionDate).toISOString().split('T')[0]; // Extract the date part
             const formattedStartTime = new Date(`${currentDate}T${startTime}`).toISOString();
             const formattedEndTime = new Date(`${currentDate}T${endTime}`).toISOString();
-    
+            const formattedDate = new Date(electionDate).toISOString();
             // Log the formatted times to check for validity
             console.log('Formatted Start Time:', formattedStartTime);
             console.log('Formatted End Time:', formattedEndTime);
     
             await axios.patch(`${BASE_URL}/election`, {
                 name: electionName,
-                election_date: electionDate,
+                election_date: date,
                 start_time: formattedStartTime,
                 end_time: formattedEndTime,
                 id: localStorage.getItem("electionId")
             });
+            query.refetch()
             toast({
                 title: "Election saved sucessfully",
             })
@@ -194,21 +211,43 @@ const Page = () => {
                         <Input value={electionName} onChange={(e) => setElectionName(e.target.value)} className='rounded bg-[#D2D3D3]'/>
                         <Pencil size={15} className=' absolute right-2 top-11'/>
                     </label>
-                    <label className='w-full flex flex-col justify-between relative gap-2'>
+                    <label className='w-full flex flex-col relative gap-2'>
                         <p>Election Date</p>
-                         <Input value={electionDate} onChange={(e)=>setElectionDate(e.target.value)} className='rounded  bg-[#D2D3D3]'/>
-                        <Calendar size={15} className=' absolute right-2 top-11'/>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                variant={"outline"}
+                                className={cn(
+                                    "w-full justify-start text-left font-normal bg-[#D2D3D3] rounded",
+                                    !date && "text-muted-foreground"
+                                )}
+                                >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {date ? format(date, "PPP") : <span>{electionDate}</span>}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0">
+                                <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={setDate}
+                                
+                                initialFocus
+                                />
+                            </PopoverContent>
+                        </Popover>
+                      
                     </label>
                 </div>
                 <div className=' flex justify-between w-full md:px-6 gap-4 pt-6'>
                 <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
                         <p>Start time</p>
-                        <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} className='rounded bg-[#D2D3D3]'  placeholder='e.g."9.00"'/>
+                        <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} className='rounded bg-[#D2D3D3] w-full'  placeholder='e.g."9.00"'/>
                         
                     </label>
                     <label className=' w-[80%] flex flex-col justify-between relative gap-2'>
                         <p>End Time</p>
-                        <Input type='time' value={endTime} onChange={(e) => setEndTime(e.target.value)} className='rounded bg-[#D2D3D3]'  placeholder='e.g."18.00"'/>
+                        <Input type='time' value={endTime} onChange={(e) => setEndTime(e.target.value)} className='rounded bg-[#D2D3D3] w-full'  placeholder='e.g."18.00"'/>
                        
                     </label>
                 </div>
