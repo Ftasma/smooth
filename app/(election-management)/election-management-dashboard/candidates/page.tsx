@@ -194,7 +194,7 @@ const Page = () => {
  }
 
   return (
-    <section className='h-[200vh] md:h-[500vh]'>
+    <section className='h-[300vh] md:h-[500vh]'>
       <div className='mx-auto flex flex-col md:w-[80%] w-full h-[80%] md:bg-white md:p-6 md:overflow-y-auto'>
         <div className='flex justify-between md:px-3 px-6'>
           <h1 className='opacity-0 md:opacity-100 text-2xl font-semibold'>Candidates</h1>

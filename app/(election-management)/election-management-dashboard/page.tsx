@@ -169,10 +169,11 @@ const Page = () => {
                 end_time: formattedEndTime,
                 id: localStorage.getItem("electionId")
             });
-            query.refetch()
+            
             toast({
                 title: "Election saved sucessfully",
             })
+            query.refetch()
         } catch (error) {
             if (error instanceof RangeError) {
                 console.error('Invalid time value:', { startTime, endTime });

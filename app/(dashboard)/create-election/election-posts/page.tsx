@@ -32,9 +32,11 @@ const Page = () => {
             }, 3000)
         },
         onError: (e: any) => {
+            console.log(e.response.data.message);
+            
             toast({
                 variant:"destructive",
-                title: "something went wrong",
+                title: e.response.data.message,
             })
         }
     })
@@ -65,7 +67,7 @@ const Page = () => {
     }
 
     return (
-        <div className='h-[100vh] w-full'>
+        <div className='h-[300vh] w-full'>
             <Link href='/dashboard'>
                 <button className='bg-gray-300 rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'>
                     <ChevronLeft />

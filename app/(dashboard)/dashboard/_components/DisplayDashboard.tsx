@@ -46,7 +46,7 @@ const DisplayDashboard = () => {
   return (
     <section className='flex flex-col gap-16 h-[100%] md:h-[500vh] p-6'>
       <div className='place-self-end'>
-        <Link href="/create-election">
+        <Link href="/our-pricing">
           <Button variant="ghost" className='bg-[#0654B0] text-white flex gap-2'>
             <span><Plus size={18} /></span>
             Create new election

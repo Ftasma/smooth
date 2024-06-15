@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body{
+    @apply bg-[#F6F6F6]
+
+}
 .widthMd{
     @apply w-[min(100%,38rem)]
 }
@@ -13,7 +18,7 @@
     border: 1px dashed #0654B0;
   }
   .dashboard-dimensions{
-    @apply md:bg-[#FFFFFF] md:h-[80%] py-3 md:w-[60%] text-center mx-auto my-auto flex flex-col gap-3
+    @apply md:bg-[#FFFFFF] md:h-[80%] py-3 md:w-[70%] text-center mx-auto my-auto flex flex-col gap-3
   }
   @layer utilities {
     /* Hide scrollbar for Chrome, Safari and Opera */

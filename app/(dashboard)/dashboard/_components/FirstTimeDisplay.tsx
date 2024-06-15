@@ -10,7 +10,7 @@ const FirstTimeDisplay = () => {
     <div className='bg-[#F6F6F6] h-[100vh] md:pt-4 pt-[6rem] px-6 text-center'>
       <Image className=' object-cover mx-auto' src={teamImage} alt='team image'/>
       <h1 className=' text-2xl'>Ready to start? Create your first <br />election now!</h1>
-      <Link href="/create-election"><Button variant="ghost" className='mt-5 flex items-center justify-center gap-3 text-[#F6F6F6] bg-[#0654B0] widthMd h-[58px] mx-auto px-6'><span className='-mt-1 text-2xl text'>&#43;</span>Create an election</Button></Link>
+      <Link href="/our-pricing"><Button variant="ghost" className='mt-5 flex items-center justify-center gap-3 text-[#F6F6F6] bg-[#0654B0] widthMd h-[58px] mx-auto px-6'><span className='-mt-1 text-2xl text'>&#43;</span>Create an election</Button></Link>
     </div>
   )
 }

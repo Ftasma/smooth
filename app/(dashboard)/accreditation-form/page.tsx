@@ -6,11 +6,105 @@ import { ArrowRight, ChevronLeft, Plus, ToggleLeftIcon,  ToggleRightIcon, Trash 
 import Link from 'next/link'
 import React, { useState } from 'react'
 import InputComp from './_components/InputComp'
+import axios from 'axios'
+import { BASE_URL } from '@/lib/endpoints'
+import { useQuery } from '@tanstack/react-query'
 
 const AccreditionForm = () => {
+  const [accreditationForm, setAccreditationForm] = useState<any>(null)
+  const [accreditationFormQuestions, setAccreditationFormQuestions] = useState<any>([])
+  const [accreditationFormTitle, setAccreditationFormTitle] = useState<any>('')
+  const [accreditationFormDescription, setAccreditationFormDescription] = useState<any>('')
   const [isEditing, setIsEditing] =useState(true)
   const [inputs, setInputs] = useState<{ id: number }[]>([{ id: 0 }])
 
+  const fetchData = async () => {
+    const electionId= localStorage.getItem("electionId")
+    const response = await axios.get(`${BASE_URL}/election/accreditation/${electionId}`)
+    // console.log(response.data.data.accreditation_form_and_questions)
+    const accreditation_form = response.data.data.accreditation_form_and_questions;
+    setAccreditationForm(accreditation_form)
+    setAccreditationFormQuestions(response.data.data.accreditation_form_and_questions.AccreditationFormQuestions)
+    const title = response.data.data.accreditation_form_and_questions.form_title
+    const description = response.data.data.accreditation_form_and_questions.form_description
+    setAccreditationFormTitle(title)
+    setAccreditationFormDescription(description);
+    return response
+ }
+
+ const query = useQuery({
+  queryFn: fetchData,
+  queryKey: ['something'],
+ })
+
+
+
+ let mutate_title_timeout: any;
+
+ const sendTitle= async(e:any)=>{
+
+  const value = e.target.value;
+
+  setAccreditationFormTitle(value);
+  
+  if( !mutate_title_timeout ) return mutate_title_timeout = setTimeout(()=> save_title(value), 1000);
+
+  else {
+    clearTimeout(mutate_title_timeout);
+    mutate_title_timeout = setTimeout(()=> save_title(value), 1000);
+  }
+
+ 
+  
+ }
+
+ function save_title(title: string){
+ 
+  const electionId= localStorage.getItem("electionId")
+  
+  axios.patch(`${BASE_URL}/election/accreditation/form`,{
+    form_title: title,
+    ElectionId:electionId,
+    is_accepting_response:isEditing,
+    id:accreditationForm.id
+  })
+
+ }
+let mutate_description_timeout: any;
+const sendDescription= async(e:any)=>{ 
+  const value = e.target.value;
+
+  setAccreditationFormDescription(value);
+  
+  if( !mutate_title_timeout ) return mutate_description_timeout = setTimeout(()=> save_title(value), 1000);
+
+  else {
+    clearTimeout(mutate_description_timeout);
+    mutate_description_timeout = setTimeout(()=> save_description(value), 1000);
+  }
+}
+
+ const save_description=(description:string)=>{
+  const electionId= localStorage.getItem("electionId")
+  
+  axios.patch(`${BASE_URL}/election/accreditation/form`,{
+    form_description: description,
+    ElectionId:electionId,
+    is_accepting_response:isEditing,
+    id:accreditationForm.id
+  })
+
+ }
+
+ if( query?.data?.data?.accreditation_form_and_questions){
+  console.log("fetched")
+  console.log( query?.data.data?.accreditation_form_and_questions)
+ }
+
+
+  // console.log(accreditation_form)
+
+ 
   const handleAddInput = () => {
     setInputs(prevInputs => [...prevInputs, { id: prevInputs.length }]);
   };
@@ -19,7 +113,7 @@ const AccreditionForm = () => {
   };
   const toggleEdit =()=> setIsEditing((current)=>!current)
   return (
-    <section className='h-[100vh] w-full'>
+    <section className='h-[400vh] md:h-[250vh] w-full'>
          <Link href='/voters-acquisition'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
          <div className='dashboard-dimensions px-5 md:overflow-y-auto no-scrollbar'>
             <h1 className=' text-2xl font-medium'>Create Accreditation Form</h1>
@@ -36,9 +130,9 @@ const AccreditionForm = () => {
                 <ToggleLeftIcon onClick={toggleEdit} size={35} />
               )}</span>
             </div>
-            <aside className=' h-[30%] border-2 space-y-2 rounded px-6 py-3'>
-                <Input placeholder='Form title' className=' bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
-                <Input placeholder='Form Description' className='h-[5rem] bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
+            <aside className=' h-[15%] border-2 space-y-2 rounded px-6 py-3'>
+                <Input value={accreditationFormTitle} onChange={sendTitle} placeholder='Form title' className=' bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
+                <Input value={accreditationFormDescription} onChange={sendDescription} placeholder='Form Description' className='h-[5rem] bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
             </aside>
                  {inputs.map(input => (
                 <InputComp key={input.id} id={input.id} onDelete={handleDeleteInput} />

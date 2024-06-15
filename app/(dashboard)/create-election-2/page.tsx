@@ -21,6 +21,8 @@ const CreateElection2 = () => {
   queryFn: fetchData,
   queryKey: ['something'],
  })
+
+
  console.log(query?.data?.data?.data?.candidates);
  
   const [showModal, setShowModal]= useState(false)
@@ -65,7 +67,7 @@ const CreateElection2 = () => {
                 <p className='text-[#57595A]'>Add candidate</p>
                 </div>
             </aside>
-            <Link href="/voters-acquisition"><Button variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px]  mx-auto'>Continue</Button></Link>
+            <Link href="/voters-acquisition"><Button  variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px]  mx-auto'>Continue</Button></Link>
         </aside>
     </div>
     <AddCandidates isVisible={showModal} onClose={()=>setShowModal(false)}/>

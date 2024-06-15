@@ -1,10 +1,24 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import axios from 'axios'
+import { BASE_URL } from '@/lib/endpoints'
 import { ChevronLeft, Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 const VotersAcquisition = () => {
+  const router = useRouter()
+  const sendData = async (payload:any) => {
+    const electionId= localStorage.getItem("electionId")
+     axios.patch(`${BASE_URL}/election`,{
+      id:electionId,
+      voters_acquisition_channel:'form'
+  }).then((res)=>{
+    router.push('/accreditation-form')
+  })
+    
+  }
   return (
     <section className=' h-[100vh] w-full'>
       
@@ -26,7 +40,7 @@ const VotersAcquisition = () => {
               <p className='text-[#1F2223]'>Import .csv file</p>
             </div>
             <div className='original-border mx-auto !h-[58px] !w-[80%] !border-[#BCBCBC] justify-center items-center flex gap-4'>
-             <p>Or create <Link href="/accreditation-form" className='text-[#0654B0] cursor-pointer'> acreditation form</Link></p>
+             <p>Or create <span onClick={sendData} className='text-[#0654B0] cursor-pointer'> acreditation form</span></p>
             </div>
         </aside>
         <Link href=""><Button variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px]  mx-auto'>Continue</Button></Link>

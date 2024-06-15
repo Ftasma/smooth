@@ -61,7 +61,7 @@ const CreateElection = () => {
     }
   return (
     <div className=' h-screen w-full '>
-        <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
+        <Link href='/our-pricing'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
         <aside className='dashboard-dimensions !py-8'>
             <h1 className='text-[#1F2223] text-2xl font-bold '>Create new election</h1>
             <p className='text-[#57595A]'>Fill in the details below⚡</p>
