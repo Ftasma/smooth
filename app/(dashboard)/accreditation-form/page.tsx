@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { ArrowRight, ChevronLeft, Plus, ToggleLeftIcon,  ToggleRightIcon, Trash } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import InputComp from './_components/InputComp'
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
@@ -16,13 +16,15 @@ const AccreditionForm = () => {
   const [accreditationFormTitle, setAccreditationFormTitle] = useState<any>('')
   const [accreditationFormDescription, setAccreditationFormDescription] = useState<any>('')
   const [isEditing, setIsEditing] =useState(true)
-  const [inputs, setInputs] = useState<{ id: number }[]>([{ id: 0 }])
-
+  const [inputs, setInputs] = useState<{ id: number }[]>([{ id: 0 }]);
+  const timeoutId = useRef<any>()
+  const timeoutDescription = useRef<any>()
   const fetchData = async () => {
     const electionId= localStorage.getItem("electionId")
     const response = await axios.get(`${BASE_URL}/election/accreditation/${electionId}`)
     // console.log(response.data.data.accreditation_form_and_questions)
     const accreditation_form = response.data.data.accreditation_form_and_questions;
+    console.log(accreditation_form)
     setAccreditationForm(accreditation_form)
     setAccreditationFormQuestions(response.data.data.accreditation_form_and_questions.AccreditationFormQuestions)
     const title = response.data.data.accreditation_form_and_questions.form_title
@@ -32,14 +34,16 @@ const AccreditionForm = () => {
     return response
  }
 
+ let accreditation_form: any;
+
  const query = useQuery({
   queryFn: fetchData,
-  queryKey: ['something'],
+  queryKey: ['query'],
  })
 
 
 
- let mutate_title_timeout: any;
+
 
  const sendTitle= async(e:any)=>{
 
@@ -47,11 +51,11 @@ const AccreditionForm = () => {
 
   setAccreditationFormTitle(value);
   
-  if( !mutate_title_timeout ) return mutate_title_timeout = setTimeout(()=> save_title(value), 1000);
+  if( !timeoutId.current ) return timeoutId.current = setTimeout(()=> save_title(value), 1000);
 
   else {
-    clearTimeout(mutate_title_timeout);
-    mutate_title_timeout = setTimeout(()=> save_title(value), 1000);
+    clearTimeout(timeoutId.current);
+    timeoutId.current = setTimeout(()=> save_title(value), 1000);
   }
 
  
@@ -66,21 +70,21 @@ const AccreditionForm = () => {
     form_title: title,
     ElectionId:electionId,
     is_accepting_response:isEditing,
-    id:accreditationForm.id
+    id:accreditation_form.id
   })
 
  }
-let mutate_description_timeout: any;
+// let mutate_description_timeout: any;
 const sendDescription= async(e:any)=>{ 
   const value = e.target.value;
 
   setAccreditationFormDescription(value);
   
-  if( !mutate_title_timeout ) return mutate_description_timeout = setTimeout(()=> save_title(value), 1000);
+  if( !timeoutDescription.current ) return timeoutDescription.current = setTimeout(()=> save_description(value), 1000);
 
   else {
-    clearTimeout(mutate_description_timeout);
-    mutate_description_timeout = setTimeout(()=> save_description(value), 1000);
+    clearTimeout(timeoutDescription.current);
+    timeoutDescription.current = setTimeout(()=> save_description(value), 1000);
   }
 }
 
@@ -96,11 +100,18 @@ const sendDescription= async(e:any)=>{
 
  }
 
- if( query?.data?.data?.accreditation_form_and_questions){
-  console.log("fetched")
-  console.log( query?.data.data?.accreditation_form_and_questions)
- }
+  if(query.data?.data.data){
+   accreditation_form = query.data?.data.data.accreditation_form_and_questions
+  }
 
+  const toggleElection=()=>{
+    const electionId= localStorage.getItem("electionId")
+    axios.patch(`${BASE_URL}/election/accreditation/form`,{
+      ElectionId:electionId,
+      is_accepting_response:!isEditing,
+      id:accreditationForm.id
+    })
+  }
 
   // console.log(accreditation_form)
 
@@ -111,7 +122,10 @@ const sendDescription= async(e:any)=>{
   const handleDeleteInput = (id: number) => {
     setInputs(prevInputs => prevInputs.filter(input => input.id !== id));
   };
-  const toggleEdit =()=> setIsEditing((current)=>!current)
+  const toggleEdit =()=> {
+    setIsEditing((current)=>!current)
+    toggleElection()
+  }
   return (
     <section className='h-[400vh] md:h-[250vh] w-full'>
          <Link href='/voters-acquisition'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>

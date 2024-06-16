@@ -57,7 +57,7 @@ const CalculatePrice = () => {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <Link href="/payment/send-funds"><AlertDialogAction>Continue</AlertDialogAction></Link>
+                            <Link className='mx-auto' href="/payment/send-funds"><AlertDialogAction>Continue</AlertDialogAction></Link>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                         </AlertDialog>

@@ -23,7 +23,7 @@ const SendFunds = () => {
           <p className='text-lg font-medium'>Amount to Pay: <span className='font-semibold'>NGN 27,000</span></p>
         </div>
         <div className='flex justify-center mt-6 gap-4'>
-          <Button className='bg-[#0654B0] text-white px-6 py-2 rounded'>I've sent funds</Button>
+          <Link href="/payment/make-payment"><Button className='bg-[#0654B0] text-white px-6 py-2 rounded'>I've sent funds</Button></Link>
           <Button className='bg-[#EDF0F7] text-gray-600 px-6 py-2 rounded cursor-not-allowed' disabled>Make Payment</Button>
         </div>
        </div>
