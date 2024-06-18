@@ -11,7 +11,7 @@ const Ourpricing = () => {
             <h1 className='text-2xl font-semibold'>Our Pricing</h1>
             <p className=' text-sm text-[]'>Explore our flexible pay per use pricing⚡</p>
             <aside className='flex md:flex-row flex-col justify-around px-4 h-full w-full md:gap-0 gap-3'>
-                <div className='leftSide border-[1px] border-[#D2D3D3] h-[89%] bg-[#F6F6F6] mx-auto w-[90%] md:w-[45%] rounded p-4 text-[#57595A] shadow-lg'>
+                <div className='leftSide border-[1px] border-[#D2D3D3] h-[89%] bg-[#F6F6F6] mx-auto w-[90%] md:w-[45%] rounded p-4 text-[#57595A] shadow-lg sm:overflow-y-auto no-scrollbar'>
                     <div className='mt-[3%]'>
                     <h2 className=' text-2xl font-semibold tracking-wide'>Free Plan</h2>
                     <p className=' tracking-wide font-normal'>Ideal for demo election</p>

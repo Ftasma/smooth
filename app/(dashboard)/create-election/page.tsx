@@ -38,6 +38,7 @@ const CreateElection = () => {
         },
         onError:(e:any)=>{
             toast({
+                variant:"destructive",
                 title: e?.response?.data?.message
             })
             console.log(e?.response?.data?.message);

@@ -9,13 +9,12 @@ import InputComp from './_components/InputComp'
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
-
 const AccreditionForm = () => {
   const [accreditationForm, setAccreditationForm] = useState<any>(null)
   const [accreditationFormQuestions, setAccreditationFormQuestions] = useState<any>([])
   const [accreditationFormTitle, setAccreditationFormTitle] = useState<any>('')
   const [accreditationFormDescription, setAccreditationFormDescription] = useState<any>('')
-  const [isEditing, setIsEditing] =useState(true)
+  const [isEditing, setIsEditing] =useState<any>(true)
   const [inputs, setInputs] = useState<{ id: number }[]>([{ id: 0 }]);
   const timeoutId = useRef<any>()
   const timeoutDescription = useRef<any>()
@@ -26,6 +25,8 @@ const AccreditionForm = () => {
     const accreditation_form = response.data.data.accreditation_form_and_questions;
     console.log(accreditation_form)
     setAccreditationForm(accreditation_form)
+   
+    setIsEditing(accreditation_form?.is_accepting_response ?? true)
     setAccreditationFormQuestions(response.data.data.accreditation_form_and_questions.AccreditationFormQuestions)
     const title = response.data.data.accreditation_form_and_questions.form_title
     const description = response.data.data.accreditation_form_and_questions.form_description
@@ -113,6 +114,18 @@ const sendDescription= async(e:any)=>{
     })
   }
 
+  async function addMoreQuestions(e: any){
+
+    const electionId= localStorage.getItem("electionId");
+
+    axios.post(`${BASE_URL}/election/accreditation/form/question`, {
+      "type": "short-answer",
+      "AccreditationFormId": accreditation_form.id,
+      "ElectionId": electionId
+    }).then(()=> query.refetch())
+
+  }
+
   // console.log(accreditation_form)
 
  
@@ -123,7 +136,7 @@ const sendDescription= async(e:any)=>{
     setInputs(prevInputs => prevInputs.filter(input => input.id !== id));
   };
   const toggleEdit =()=> {
-    setIsEditing((current)=>!current)
+    setIsEditing((current:boolean)=>!current)
     toggleElection()
   }
   return (
@@ -148,10 +161,10 @@ const sendDescription= async(e:any)=>{
                 <Input value={accreditationFormTitle} onChange={sendTitle} placeholder='Form title' className=' bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
                 <Input value={accreditationFormDescription} onChange={sendDescription} placeholder='Form Description' className='h-[5rem] bg-[#EAEAEA] border-none rounded placeholder:text-[#57595A]'/>
             </aside>
-                 {inputs.map(input => (
-                <InputComp key={input.id} id={input.id} onDelete={handleDeleteInput} />
+                 {(accreditation_form?.AccreditationFormQuestions ?? []).map((input: any) => (
+                <InputComp key={input.id} accreditationFormQuestion={input} refetch={query.refetch}  />
                      ))}
-                <Button onClick={handleAddInput} className='place-self-start border-2 border-[#0654B0] gap-x-2 text-[#0654B0] rounded'><Plus size={17}/>Add more questions</Button>
+                <Button onClick={addMoreQuestions} className='place-self-start border-2 border-[#0654B0] gap-x-2 text-[#0654B0] rounded'><Plus size={17}/>Add more questions</Button>
                 <Button variant="ghost" className=' place-self-center bg-[#0654B0] gap-x-2 text-white mt-3 w-[85%] rounded'>Get link <ArrowRight size={17}/></Button>
          </div>
     </section>

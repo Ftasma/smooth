@@ -5,9 +5,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import axios from 'axios'
 import { BASE_URL } from '@/lib/endpoints'
-import { ChevronLeft, Upload } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { ChevronLeft, Regex, Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation';
+import papa from "papaparse";
+import z from "zod";
+import { useToast } from "@/components/ui/use-toast"
 const VotersAcquisition = () => {
+  const { toast } = useToast()
   const router = useRouter()
   const sendData = async (payload:any) => {
     const electionId= localStorage.getItem("electionId")
@@ -18,6 +22,39 @@ const VotersAcquisition = () => {
     router.push('/accreditation-form')
   })
     
+  }
+
+  function handleChange( e: any ){
+    console.log(e.target.files[0])
+    papa.parse(e.target.files[0], {
+      header: true,
+      complete: (results) => {
+        const possible_email_headers = ["email", "e-mail", "Email", "E-mail", "EMAIL", "E-MAIL"];
+        const first_data = Object.keys(results.data[0] as any);
+        // 1st check
+        if(!first_data.some( _ => possible_email_headers.includes(_))){
+          toast({
+            variant:"destructive",
+            title: "CSV doesn't contain Email field",
+        })
+        }
+          console.log(first_data);
+          console.log(results);
+          
+        const email_text = first_data.find(field => ["email", "e-mail", "Email", "E-mail", "EMAIL", "E-MAIL","electronic mail","ELECTRONIC MAIL","electronic-mail","ELECTRONIC-MAIL"].includes(field));
+        console.log( email_text );
+
+        const email_error_index = results.data.findIndex( (_: any) => z.string().email().safeParse(_[email_text as any]).error );
+
+        console.log( `Invalid email at row ${email_error_index + 2} showing ${(results.data as any)[email_error_index][email_text as any]}` )
+        // 2nd check
+        // Call the billing api to get the last billing for this election 
+        
+        // call the upload url api
+        // upload csv 
+        // update election details
+      }
+    })
   }
   return (
     <section className=' h-[100vh] w-full'>
@@ -35,7 +72,7 @@ const VotersAcquisition = () => {
         <div className=' border-[#BCBCBC] border w-[75%] mx-auto border-dotted -mt-8'/>
         <aside className=' mt-12 space-y-3'>
             <div className=' original-border mx-auto !h-[12rem] !w-[80%] !border-[#BCBCBC] gap-3 flex flex-col justify-center items-center'>  
-                  <Input id="file" className='opacity-0' type="file" />
+                  <Input accept="text/csv"  onChange={handleChange} id="file" className='opacity-0' type="file" />
                   <Upload className='-mt-10 cursor-pointer text-[#0654B0] text-sm'/>   
               <p className='text-[#1F2223]'>Import .csv file</p>
             </div>
