@@ -200,7 +200,7 @@ const InputComp: React.FC<InputCompProps> = ({ refetch, accreditationFormQuestio
         <div className='space-y-3'>
           {accreditationFormQuestionOptions.map((option: string, index: number) =>
            (
-            <QuestionOption option={option} index={index} setterFn={ handleOptionChange } deleteFn={handleDeleteOption} />
+            <QuestionOption option={option} index={index} key={index} setterFn={ handleOptionChange } deleteFn={handleDeleteOption} />
           ))}
           <button
             type='button'
