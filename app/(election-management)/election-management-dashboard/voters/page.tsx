@@ -5,7 +5,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 const Page = () => {
-  const electionId= localStorage.getItem("electionId")
+  const electionId= localStorage?.getItem("electionId")
   const fetchData=(payload:any)=>{
     return axios.post(`${BASE_URL}/election/voter/filter`,{
         ElectionId:payload.electionId,
