@@ -56,12 +56,12 @@ const Wallet = () => {
                         </h1>
                         <p>Make transfer to the account below to top-up your wallet⚡</p>
                         <div className='mt-2 flex items-center justify-center'>
-                        <p className='text-3xl font-semibold text-center'>{wallet.account_number}</p>
+                        <p className='text-3xl font-semibold text-center'>{wallet?.account_number}</p>
                         <CopyIcon size={24} className='ml-2 cursor-pointer' />
                         </div>
                         <div className='mt-8 text-center'>
-                            <p className='text-lg font-medium'>Account Name: <span className='font-semibold'>{wallet.account_name}</span></p>
-                            <p className='text-lg font-medium'>Account Bank: <span className='font-semibold'>{wallet.bank_name}</span></p>
+                            <p className='text-lg font-medium'>Account Name: <span className='font-semibold'>{wallet?.account_name}</span></p>
+                            <p className='text-lg font-medium'>Account Bank: <span className='font-semibold'>{wallet?.bank_name}</span></p>
                         </div>
                         <div className='mx-auto'>
                             <Button className='bg-[#0654B0] rounded text-white w-[15rem]'>I&apos;ve sent funds</Button>
