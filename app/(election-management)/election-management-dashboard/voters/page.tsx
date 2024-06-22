@@ -5,8 +5,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 const Page = () => {
-  const electionId= localStorage?.getItem("electionId")
   const fetchData=(payload:any)=>{
+    const electionId= localStorage?.getItem("electionId")
     return axios.post(`${BASE_URL}/election/voter/filter`,{
         ElectionId:payload.electionId,
         page:payload.page,
@@ -23,9 +23,9 @@ const Page = () => {
         console.log(e);
     }
  })
- useEffect(()=>{
-  mutation.mutate({electionId, page:1, perPage:50})
- },[])
+//  useEffect(()=>{
+//   mutation.mutate({electionId, page:1, perPage:50})
+//  },[])
   
   return (
     <div className='h-screen'>page</div>
