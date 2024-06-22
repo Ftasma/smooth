@@ -253,7 +253,7 @@ const Page = () => {
                     </label>
                 </div>
 
-                <Button onClick={saveElection} variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%]'>Save</Button>
+                <Button onClick={saveElection} variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] md:mb-4 mt-[5%] ml-[5%]'>Save</Button>
             </div>
 
             <aside className='md:h-[40%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>

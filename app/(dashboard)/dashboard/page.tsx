@@ -17,24 +17,25 @@ const Dashboard = () => {
     queryKey: ['next'],
   });
 
-  const isElection = query?.data?.data?.data?.elections.length
-  console.log(isElection);
-
   if (query.isLoading) {
-    return (<div className="flex justify-center items-center h-screen">
-    <Loader2 className="animate-spin" size={48} />
-  </div>)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="animate-spin" size={48} />
+      </div>
+    );
   }
 
   if (query.isError) {
     return <div className='flex justify-center items-center h-screen'>Error loading data</div>;
   }
 
+  const isElection = query.data?.data?.data?.elections?.length;
+
   return (
     <section>
-      {isElection===0 ? (
+      {isElection === 0 ? (
         <FirstTimeDisplay />
-        ) : (
+      ) : (
         <DisplayDashboard />
       )}
     </section>
