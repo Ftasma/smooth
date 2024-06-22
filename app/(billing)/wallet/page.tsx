@@ -32,7 +32,7 @@ const Wallet = () => {
 
     useEffect(() => {
         if (wallet) {
-            setBalance(wallet.account_balance);
+            setBalance(wallet._balance);
         }
     }, [wallet]);
 
