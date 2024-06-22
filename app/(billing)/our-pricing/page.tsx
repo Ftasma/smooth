@@ -1,9 +1,37 @@
+"use client"
 import { Button } from '@/components/ui/button'
+import { BASE_URL } from '@/lib/endpoints'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 
-const Ourpricing = () => {
+const Ourpricing = () => { 
+    const router = useRouter()   
+    const sendFreeBilling=(payload:any)=>{
+        return axios.post(`${BASE_URL}/billing`,{
+            type:payload.type,
+            no_of_voters: 10,
+            no_of_months: 1
+        })
+    }
+    const mutation = useMutation({
+        mutationFn:sendFreeBilling,
+        mutationKey:["next"],
+        onSuccess:()=>{
+            
+            router.push("/create-election")
+            
+        },
+        onError:(e:any)=>{
+            console.log(e);
+        }
+    })
+    const sendBilling=()=>{
+        mutation.mutate({type:"free"})
+    }
   return (
     <section className='h-screen'>
         <Link href='/dashboard'><button className=' bg-gray-300  rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft/></button></Link>
@@ -22,7 +50,7 @@ const Ourpricing = () => {
                         <li>Basic security features</li>
                         <li>Basic analytics and reporting</li>
                     </ul>
-                    <Link href="/create-election"><Button className='p-3 shadow-md border-2 border-[#0654B0] text-[#0654B0] bg-white rounded mt-[20%] font-semibold px-8'>Create demo election</Button></Link>
+                    <Button onClick={sendBilling} className='p-3 shadow-md border-2 border-[#0654B0] text-[#0654B0] bg-white rounded mt-[20%] font-semibold px-8'>Create demo election</Button>
                 </div>
                 <div className='rightSide border-[1px] border-[#D2D3D3] h-[89%] bg-[#F6F6F6] mx-auto w-[90%] md:w-[45%] rounded p-4 text-[#57595A] shadow-lg sm:overflow-y-auto no-scrollbar'>
                 <div className='mt-[3%]'>

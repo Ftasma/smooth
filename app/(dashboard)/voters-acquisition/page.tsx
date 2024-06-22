@@ -93,12 +93,13 @@ const VotersAcquisition = () => {
     await fileUploadInstance(signed_upload_url, file.type).put("", file);
     const file_url = `https://smooth-ballot.s3.eu-north-1.amazonaws.com/${key}`;
     const electionId = localStorage.getItem("electionId");
+    const fileSize = file.size; 
     mutation.mutate({
       id: electionId,
       csv_file: {
         "link": file_url,
         "id": key,
-        "size": 10020304040,
+        "size": fileSize, 
       },
     } as any);
     setIsFileSelected(false);
@@ -108,7 +109,7 @@ const VotersAcquisition = () => {
       csv_file: {
         "link": file_url,
         "id": key,
-        "size": 10020304040,
+        "size": fileSize, 
       },
     } as any);
   }
@@ -145,7 +146,7 @@ const VotersAcquisition = () => {
             <p>Or create <span onClick={sendData} className='text-[#0654B0] cursor-pointer'>accreditation form</span></p>
           </div>
         </aside>
-          <p className='mx-auto px-6 flex gap-1 mt-2 text-[#EE9322]'><AlertCircle size={24}/>Only one option must be used, Using both will lead to loss of voter’s data</p>
+          <p className='mx-auto px-6 flex gap-1 mt-2 text-[#EE9322]'><AlertCircle size={22}/>Only one option must be used, Using both will lead to loss of voter’s data</p>
         <Button onClick={submitCsv} variant="ghost" className='mt-5 text-[#F6F6F6] bg-[#0654B0] w-[80%] h-[58px] mx-auto' disabled={!isFileSelected}>Continue</Button>
       </aside>
     </section>
