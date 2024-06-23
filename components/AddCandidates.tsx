@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import { BASE_URL } from '@/lib/endpoints';
@@ -8,9 +8,11 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from 'next/navigation';
 import { fileUploadInstance } from './ClientSetup';
 import { ChevronLeft, Upload } from 'lucide-react';
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
+
 const AddCandidates = ({ onClose, isVisible }: any) => {
-  const { toast } = useToast()
+  const { toast } = useToast();
+
   const sendData = (payload: any) => {
     return axios.post(`${BASE_URL}/election/candidate`, {
       ElectionPostId: payload.electionPostId,
@@ -30,21 +32,26 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [image, setImage] = useState(0);
 
+  useEffect(() => {
+    const storedElectionId = localStorage.getItem("electionId");
+    const storedElectionPostId = localStorage.getItem("electionPostId");
+    if (storedElectionId) setElectionId(Number(storedElectionId));
+    if (storedElectionPostId) setElectionPostId(storedElectionPostId);
+  }, []);
+
   function handleFileChange(e: any) {
     e.preventDefault();
     setFile(e.target.files[0]);
   }
 
   const fetchData = async () => {
-    const electionId = localStorage.getItem("electionId");
-    setElectionId(Number(electionId));
-    const electionPostId = localStorage.getItem("electionPostId");
     return await axios.get(`${BASE_URL}/election/posts?ElectionId=${electionId}`);
   };
 
   const { data, isLoading } = useQuery({
     queryFn: fetchData,
-    queryKey: ['next'],
+    queryKey: ['next', electionId],
+    enabled: !!electionId, // Enable the query only if electionId is set
   });
 
   const mutation = useMutation({
@@ -54,15 +61,15 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
       onClose();
       setTimeout(() => {
         toast({
-          title: "Candidate added sucessfully",
-      })
+          title: "Candidate added successfully",
+        });
       }, 1000);
     },
     onError: (e: any) => {
       toast({
-        variant:"destructive",
-        title: "An error occured",
-    })
+        variant: "destructive",
+        title: "An error occurred",
+      });
     }
   });
 
@@ -70,7 +77,7 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
     const key = uuidv4();
     const response = await axios.get(`https://sbxapi.smoothballot.com/storage/url?key=${key}`);
     const signed_upload_url = response.data.data.url;
-    fileUploadInstance(signed_upload_url, file.type).put("", file);
+    await fileUploadInstance(signed_upload_url, file.type).put("", file);
     const file_url = `https://smooth-ballot.s3.eu-north-1.amazonaws.com/${key}`;
     const file_name_arr = file.name.split(".");
     const extension = file_name_arr[file_name_arr.length - 1];
@@ -109,7 +116,7 @@ const AddCandidates = ({ onClose, isVisible }: any) => {
                   Election post 
                   <select value={electionPostId} onChange={(e) => setElectionPostId(e.target.value)} className='outline-none w-[100%] h-[48px] border-[#E5E5E5] rounded-md bg-[#EAEAEA] px-2' name="" id="">
                     <option value="">Select post</option>
-                    {data?.data?.data?.election_posts.map((post: any) => (
+                    {data?.data?.data?.election_posts?.map((post: any) => (
                       <option key={post.id} value={post.id}>{post.title}</option>
                     ))}
                   </select>
