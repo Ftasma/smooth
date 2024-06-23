@@ -40,6 +40,8 @@ const VotersAcquisition = () => {
       toast({
         title: "CSV Uploaded successfully",
       })
+    }).then(()=>{
+      router.push("/dashboard")
     })
   }
 

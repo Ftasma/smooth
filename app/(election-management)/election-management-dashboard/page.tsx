@@ -203,11 +203,11 @@ const Page = () => {
 
   return (
     <section className=' h-auto md:p-3'>
-        <aside className='mx-auto flex flex-col w-[95%] h-auto md:bg-white md:p-6 p-2 relative'>
+        <aside className='mx-auto  flex flex-col w-[95%] lg:w-[80%] h-auto md:bg-white md:p-6 p-2 relative'>
             <span className=' flex place-self-end gap-2 items-center'>Start Election<ToggleLeft size={30} className=''/></span>
             <div className=' md:h-[20%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
                 <div className='flex-col flex  md:flex-row justify-between w-full md:px-6 gap-4 pt-6 '>
-                    <label className='w-full flex flex-col justify-between relative gap-2'>
+                    <label className='w-full  flex flex-col justify-between relative gap-2'>
                         <p>Election name</p>
                         <Input value={electionName} onChange={(e) => setElectionName(e.target.value)} className='rounded bg-[#D2D3D3]'/>
                         <Pencil size={15} className=' absolute right-2 top-11'/>
@@ -253,13 +253,13 @@ const Page = () => {
                     </label>
                 </div>
 
-                <Button onClick={saveElection} variant="ghost" className='bg-[#0654B0] text-white w-[30%] place-self-start md:mt-[2%] md:ml-[3%] md:mb-4 mt-[5%] ml-[5%]'>Save</Button>
+                <Button onClick={saveElection} variant="ghost" className='bg-[#0654B0] text-white w-[10rem] place-self-start md:mt-[2%] md:ml-[3%] md:mb-4 mt-[5%] ml-[5%]'>Save</Button>
             </div>
 
             <aside className='md:h-[40%] rounded md:border-[1px] mt-3 w-full border-[#B1B2B2] overflow-y-auto'>
     <div className='flex justify-between px-5'>
         <p className='opacity-0'>j</p>
-        <Button onClick={() => setShowModal(true)} variant="ghost" className='hidden md:flex bg-[#0654B0] text-white w-[30%] place-self-end md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%] gap-3'><Plus size={18} />Add new post</Button>
+        <Button onClick={() => setShowModal(true)} variant="ghost" className='hidden md:flex bg-[#0654B0] text-white p-3 place-self-end md:mt-[2%] md:ml-[3%] mt-[5%] ml-[5%] gap-3'><Plus size={16} />Add new post</Button>
     </div>
     <h1 className='place-self-start font-semibold md:hidden text-2xl mt-6'>Election posts</h1>
     
