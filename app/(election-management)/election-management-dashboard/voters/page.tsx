@@ -114,7 +114,54 @@ const Page: React.FC = () => {
       });
     }
   }
-
+  const disableVoter = async (voter: Voter) => {
+    const electionId = localStorage.getItem("electionId");
+    try {
+      await axios.patch(`${BASE_URL}/election/voter`, {
+        ElectionId: electionId,
+        voter_id: voter.id,
+        is_suspended: true
+      });
+      setVoters((prevVoters) => 
+        prevVoters.map((v) => (v.id === voter.id ? { ...v, is_suspended: true } : v))
+      );
+      setFilteredVoters((prevFiltered) =>
+        prevFiltered.map((v) => (v.id === voter.id ? { ...v, is_suspended: true } : v))
+      );
+      toast({
+        title: "Voter disabled"
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: error.message
+      });
+    }
+  }
+  const enableVoter = async (voter: Voter) => {
+    const electionId = localStorage.getItem("electionId");
+    try {
+      await axios.patch(`${BASE_URL}/election/voter`, {
+        ElectionId: electionId,
+        voter_id: voter.id,
+        is_suspended: false
+      });
+      setVoters((prevVoters) => 
+        prevVoters.map((v) => (v.id === voter.id ? { ...v, is_suspended: false } : v))
+      );
+      setFilteredVoters((prevFiltered) =>
+        prevFiltered.map((v) => (v.id === voter.id ? { ...v, is_suspended: false } : v))
+      );
+      toast({
+        title: "Voter Enabled"
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: error.message
+      });
+    }
+  }
   const renderHeaders = () => {
     if (filteredVoters.length === 0) return null;
     return (
@@ -158,7 +205,14 @@ const Page: React.FC = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Button className='flex items-center gap-3 w-full p-2 px-3 border-[#CBD2E0] border rounded'>Disable</Button>
+                {voters[index]?.is_suspended?(<Button onClick={() => enableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-[#CBD2E0] border rounded'>
+                    Enable
+                    </Button>):(
+                    <Button onClick={() => disableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-[#CBD2E0] border rounded'>
+                    Disable
+                    </Button>
+                    )}
+                  
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

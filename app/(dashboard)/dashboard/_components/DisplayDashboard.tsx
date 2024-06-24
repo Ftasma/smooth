@@ -59,7 +59,7 @@ const DisplayDashboard = () => {
           elections.map((election: any) => (
             <div
               onClick={() => eachElection(election.id, election.name, election.election_date)}
-              className=' w-[90%] flex flex-col justify-center gap-3 items-center shadow-lg  m-2 py-2 px-3 md:h-[180px] h-[160px] cursor-pointer bg-white rounded-[5%]'
+              className='md:w-[15rem] w-[10rem] flex flex-col justify-center gap-3 items-center shadow-lg  m-2 py-2 px-3 md:h-[180px] h-[160px] cursor-pointer bg-white rounded-[5%]'
               key={election.id}
             >
               <Image src={vote} alt='Vote icon' height={20} width={20}/>
