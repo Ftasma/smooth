@@ -98,8 +98,8 @@ const Wallet = () => {
                         <p className='text-[#0654B0]'>View all</p>
                     </div>
                     {walletTransactions.map((transaction:any)=>(
-                        <div>
-                        <div className='flex justify-between mt-6' key={transaction.id}>
+                        <div key={transaction.id}>
+                        <div className='flex justify-between mt-6' >
                             <div className='flex gap-5 items-center max-w-[55%]'>
                                 <CreditCard size={28}/>
                                 <div className='flex flex-col items-start'>
