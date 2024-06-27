@@ -140,7 +140,8 @@ const Page = () => {
 
      const deleteData = async (id: any) => {
         try {
-            await axios.delete(`${BASE_URL}/election/post/${id}`)
+            const electionId = localStorage.getItem("electionId")
+            await axios.delete(`${BASE_URL}/election/post/${id}/${electionId}`)
             toast({
                 title: "Post deleted sucessfully",
             })

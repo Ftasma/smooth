@@ -1,42 +1,51 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { BASE_URL } from '@/lib/endpoints'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { ChevronLeft, CopyIcon, Loader2, Plus } from 'lucide-react'
+import { ChevronLeft, CopyIcon, CreditCard, Loader2, Plus } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const Wallet = () => {
-    const [balance, setBalance] = useState<any>(0)
-   
+    const [balance, setBalance] = useState<number>(0)
+
     const getWallet = async () => {
-        return await axios.get(`${BASE_URL}/wallet`);
+        const response = await axios.get(`${BASE_URL}/wallet`);
+        return response.data.data.wallet;
     }
+
     const getWalletTransactions = async () => {
-        return await axios.get(`${BASE_URL}/wallet/transactions`);
+        const response = await axios.get(`${BASE_URL}/wallet/transactions`);
+        return response.data.data.wallet_transactions;
     }
 
-    const walletQuery = useQuery({
+    const { data: wallet, isLoading: walletLoading } = useQuery({
         queryFn: getWallet,
-        queryKey: ['next'],
+        queryKey: ['wallet'],
     });
-    const walletTransac = useQuery({
+
+    const { data: walletTransactions, isLoading: transactionsLoading } = useQuery({
         queryFn: getWalletTransactions,
-        queryKey: ['walletT'],
+        queryKey: ['walletTransactions'],
     });
-
-    const wallet = walletQuery?.data?.data?.data?.wallet;
-    const walletTransactions = walletTransac?.data?.data?.data?.wallet_transactions;
-
+    
     useEffect(() => {
         if (wallet) {
             setBalance(wallet._balance);
         }
     }, [wallet]);
 
-    if (walletQuery.isLoading || walletTransac.isLoading) {
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+        };
+        return new Date(dateString).toLocaleString(undefined, options);
+    }
+
+    if (walletLoading || transactionsLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <Loader2 className="animate-spin" size={48} />
@@ -45,7 +54,7 @@ const Wallet = () => {
     }
 
     return (
-        <section className='w-full flex flex-col pt-10 pl-8'>
+        <section className='w-full flex flex-col pt-10 pl-8 px-3'>
             <aside className='flex gap-8 md:mb-10 mb-6'>
                 <Link href='/dashboard'>
                     <button className='bg-gray-300 rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'>
@@ -83,10 +92,26 @@ const Wallet = () => {
                         </DialogContent>
                     </Dialog>
                 </div>
-                <div className='flex justify-between mt-7'>
-                    <p className='text-[#363939] font-semibold'>Wallet Transaction</p>
-                    <p className='text-[#0654B0]'>View all</p>
-                </div>
+                <aside>
+                    <div className='flex justify-between mt-7'>
+                        <p className='text-[#363939] font-semibold'>Wallet Transaction</p>
+                        <p className='text-[#0654B0]'>View all</p>
+                    </div>
+                    {walletTransactions.map((transaction:any)=>(
+                        <div className='flex justify-between mt-6' key={transaction.id}>
+                            <div className='flex gap-5 items-center'>
+                                <CreditCard size={28}/>
+                                <div className='flex flex-col items-start'>
+                                    <p className='text-[1rem] md:text-[1.2rem] font-semibold'>{transaction?.description}</p>
+                                    <p className='text-sm'>{formatDate(transaction?.createdAt)}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p className='text-[1rem] md:text-[1.2rem] font-semibold'>NGN <span>{transaction?.amount}</span></p>
+                            </div>
+                        </div>
+                    ))}
+                </aside>
             </div>
         </section>
     )

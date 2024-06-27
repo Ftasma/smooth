@@ -50,8 +50,8 @@ const SignIn = () => {
             // toast({
             //     title: "sbjbjbjbj"
             // })
-            toast.error(e?.response?.data?.message?e?.response?.data?.message:"An error occured, It's not you, it's us. Please try again later.")
-            console.log(e?.response?.data?.message?e?.response?.data?.message:"An error occured");
+            toast.error(e?.response?.data?.message)
+            // console.log(e?.response?.data?.message?e?.response?.data?.message);
         }
     })
     const submit=()=>{
@@ -76,7 +76,7 @@ const SignIn = () => {
                 <label className=" flex flex-col gap-2 relative">
                     <p>Password</p>
                     <div className="relative widthMd md:w-[100%] w-[80%]">
-                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <input placeholder="********" required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
                     <button
                                 type="button"
                                 onClick={toggleShowPassword}

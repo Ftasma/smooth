@@ -66,7 +66,7 @@ const SignUp = () => {
                 <label className=" flex flex-col gap-2">
                     <p>Password</p>
                     <div className="relative widthMd md:w-[100%] w-[80%]">
-                    <input required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full  h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <input required placeholder="********" value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full  h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
                     <button
                                 type="button"
                                 onClick={toggleShowPassword}
