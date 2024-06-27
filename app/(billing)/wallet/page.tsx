@@ -98,17 +98,20 @@ const Wallet = () => {
                         <p className='text-[#0654B0]'>View all</p>
                     </div>
                     {walletTransactions.map((transaction:any)=>(
+                        <div>
                         <div className='flex justify-between mt-6' key={transaction.id}>
-                            <div className='flex gap-5 items-center'>
+                            <div className='flex gap-5 items-center max-w-[55%]'>
                                 <CreditCard size={28}/>
                                 <div className='flex flex-col items-start'>
                                     <p className='text-[1rem] md:text-[1.2rem] font-semibold'>{transaction?.description}</p>
                                     <p className='text-sm'>{formatDate(transaction?.createdAt)}</p>
                                 </div>
                             </div>
-                            <div>
-                                <p className='text-[1rem] md:text-[1.2rem] font-semibold'>NGN <span>{transaction?.amount}</span></p>
+                            <div className='max-w-[40%]'>
+                                <p className='text-sm md:text-[1.2rem] font-semibold'>NGN <span>{transaction?.amount}</span></p>
                             </div>
+                        </div>
+                            <hr className='border-[1px] mt-2' />
                         </div>
                     ))}
                 </aside>

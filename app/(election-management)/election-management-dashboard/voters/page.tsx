@@ -272,7 +272,7 @@ const Page: React.FC = () => {
         </div>
       ) : (
         voters.length !== 0 ? (
-          <div className='dashboard-dimensions !w-[95%] px-4 md:px-8 no-scrollbar !h-[95%]'>
+          <div className='dashboard-dimensions  !w-full md:!w-[90%]  px-4 md:px-8 no-scrollbar !h-[95%]'>
             <div className='flex justify-between w-full md:mt-9'>
               <Input className='md:w-[400px] w-[50%] rounded' placeholder="Search voters" />
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
