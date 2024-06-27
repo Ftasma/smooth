@@ -6,7 +6,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { ChevronDown, Loader2, Plus } from 'lucide-react'
+import { useRouter } from "next/navigation"
+import { ChevronDown, FileTerminal, Filter, FilterIcon, FilterX, Loader2, Plus, Scale } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 import {
@@ -47,7 +48,7 @@ const Page: React.FC = () => {
   const [votersCount, setVotersCount] = useState<number>(0);
   const [newVoter, setNewVoter] = useState<{ [key: string]: any }>({});
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
+  const router = useRouter()
   const fieldsToExclude = ["Timestamp", "is_suspended", "_job_id", "createdAt", "updatedAt", "id", "ElectionId", "UserId", "password", "data"];
 
   const fetchData = (payload: FetchDataPayload) => {
@@ -275,6 +276,7 @@ const Page: React.FC = () => {
           <div className='dashboard-dimensions  !w-full md:!w-[90%]  px-4 md:px-8 no-scrollbar !h-[95%]'>
             <div className='flex justify-between w-full md:mt-9'>
               <Input className='md:w-[400px] w-[50%] rounded' placeholder="Search voters" />
+              
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className='bg-[#0654B0] text-white flex p-3 gap-2 rounded'><Plus size={16} />Add New Voters</Button>
@@ -330,7 +332,7 @@ const Page: React.FC = () => {
               <Image className='object-cover mx-auto' src={teamImage} alt='team image' />
               <h1 className='text-2xl'>Ready to start election<br />Upload voters!</h1>
             </div>
-              <Button className="flex gap-1 place-self-center bg-[#0654B0] text-white rounded"><Plus size={15}/>Add voters</Button>
+              <Button onClick={()=>router.push("/voters-acquisition")} className="flex gap-1 place-self-center bg-[#0654B0] text-white rounded"><Plus size={15}/>Add voters</Button>
           </div>
         )
       )}

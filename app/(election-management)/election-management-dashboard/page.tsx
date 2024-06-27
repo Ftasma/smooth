@@ -69,10 +69,12 @@ const Page = () => {
                 })
 
         },
-        onError: (e: any) => {
+        onError: (response:any) => {
+            // console.log(response?.response?.data?.message);
+            
             toast({
                 variant:"destructive",
-                title: "Something went wrong",
+                title: response?.response?.data?.message,
             })
         }
     })
@@ -134,6 +136,7 @@ const Page = () => {
      const query = useQuery({
       queryFn: fetchData,
       queryKey: ['something'],
+      
      })
 
      console.log(query?.data?.data?.data?.election_posts);
