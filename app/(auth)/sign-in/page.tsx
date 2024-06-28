@@ -66,17 +66,17 @@ const SignIn = () => {
        <section className="pt-6 md:px-16 px-8 flex w-full flex-col gap-4 md:w-[50%]">
             <header><Image className=" w-[110px] h-[110px]" src={lightlogo} alt="logo"/></header>
             <div className="flex flex-col gap-3 w-full mx-auto">
-            <h1 className=" text-[#1F2223]  text-2xl">Welcome back!</h1>
-            <p className="w-[80%]  text-[#57595A]  text-sm ">Please enter your credentials to access your account</p>
+            <h1 className=" text-[#1F2223]  text-2xl font-satoshi">Welcome back!</h1>
+            <p className="w-[80%]  text-[#57595A] text-sm font-satosh">Please enter your credentials to access your account</p>
             <aside className=" flex flex-col gap-3">
                 <label className=" flex flex-col gap-2">
-                    <p>Email</p>
-                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
+                    <p className="font-satoshi">Email</p>
+                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:font-satosh placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
                 </label>
                 <label className=" flex flex-col gap-2 relative">
-                    <p>Password</p>
+                    <p className="font-satoshi">Password</p>
                     <div className="relative widthMd md:w-[100%] w-[80%]">
-                    <input placeholder="********" required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <input placeholder="********" required value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 placeholder:font-satosh pl-2 md:w-full w-[80%] h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
                     <button
                                 type="button"
                                 onClick={toggleShowPassword}
@@ -86,7 +86,7 @@ const SignIn = () => {
                             </button>
                     </div>
                 </label>
-                <Link href="/forgot-password"><p className="my-1 text-sm text-[#0654B0]">Forgot password?</p></Link>
+                <Link href="/forgot-password"><p className="my-1 text-sm font-satosh text-[#0654B0]">Forgot password?</p></Link>
                  <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
@@ -95,7 +95,7 @@ const SignIn = () => {
                         </div>
                       ):"Login"
                  }</button>
-                <p className=" text-sm">Don't have an account? <Link href="/sign-up"> <span className=" text-[#0654B0]">Create one</span></Link></p>
+                <p className=" text-sm font-satosh">Don't have an account? <Link href="/sign-up"> <span className=" text-[#0654B0]">Create one</span></Link></p>
             </aside>
             </div>
        </section>

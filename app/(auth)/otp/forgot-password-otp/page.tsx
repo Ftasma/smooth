@@ -38,8 +38,8 @@ const ForgotPasswordOtp = () => {
     <div className=" w-full">
         <section className="md:w-[70%] w-[90%] mx-auto items-start flex gap-2 flex-col">
              <header><Image className=" w-[110px] h-[110px]" src={lightlogo} alt="logo"/></header>
-             <h1 className=" text-2xl text-[#1F2223]">Check your e-mail</h1>
-             <p className=" text-[#545454]">Kindly input the 6 digit code that was sent to the e-mail provided below⚡</p>
+             <h1 className=" text-2xl text-[#1F2223] font-satoshi">Check your e-mail</h1>
+             <p className=" text-[#545454] font-satosh">Kindly input the 6 digit code that was sent to the e-mail provided below⚡</p>
              <div className=" ml-[-1rem]">
              <PinInput 
                 length={6} 
@@ -58,8 +58,8 @@ const ForgotPasswordOtp = () => {
                 />
              </div>
                 <p className=" text-red-500 text-sm">{error}</p>
-                <p className=" text-sm text-[#0654B0]">Resend code</p>
-                <button onClick={submit} className=" widthMd text-white bg-[#0654B0] h-10 rounded-md">Create new password</button>
+                <p className=" text-sm text-[#0654B0] font-satosh">Resend code</p>
+                <button onClick={submit} className=" widthMd text-white bg-[#0654B0] h-10 rounded-md font-satosh">Create new password</button>
         </section>
     </div>
      );

@@ -52,21 +52,21 @@ const SignUp = () => {
        <section className="pt-6 md:px-16 px-8 flex w-full flex-col gap-4 md:w-[50%]">
             <header><Image className=" w-[110px] h-[110px]" src={lightlogo} alt="logo"/></header>
             <div className="flex flex-col gap-3 w-full mx-auto">
-            <h1 className=" text-[#1F2223] text-2xl">Create an account</h1>
-            <p className="w-[80%] pt-2 text-[#57595A]  text-sm ">We just need a little information from you to get started✨</p>
+            <h1 className=" text-[#1F2223] text-2xl font-satoshi">Create an account</h1>
+            <p className="w-[80%] pt-2 text-[#57595A]  text-sm font-satosh">We just need a little information from you to get started✨</p>
             <aside className="pt-3 flex flex-col gap-3">
                 <label className=" flex flex-col gap-2">
-                    <p>Name</p>
-                    <input required value={name} onChange={(e)=>setName(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="text" placeholder="John Doe"/>
+                    <p className="font-satoshi">Name</p>
+                    <input required value={name} onChange={(e)=>setName(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:font-satosh placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="text" placeholder="John Doe"/>
                 </label>
                 <label className=" flex flex-col gap-2">
-                    <p>Email</p>
-                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
+                    <p className="font-satoshi">Email</p>
+                    <input required value={email} onChange={(e)=>setEmail(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:font-satosh placeholder:pl-2 pl-2 md:w-full h-10 border-2 border-[#E5E5E5] rounded-md" type="email" placeholder="Johnismydoe@gmail.com"/>
                 </label>
                 <label className=" flex flex-col gap-2">
-                    <p>Password</p>
+                    <p className="font-satoshi">Password</p>
                     <div className="relative widthMd md:w-[100%] w-[80%]">
-                    <input required placeholder="********" value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:pl-2 pl-2 md:w-full  h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
+                    <input required placeholder="********" value={password} onChange={(e)=>setPassword(e.target.value)} className="widthMd bg-[#EAEAEA] focus:outline-none placeholder:font-satosh placeholder:pl-2 pl-2 md:w-full  h-10 border-2 border-[#E5E5E5] rounded-md" type={showPassword ? "text" : "password"}/>
                     <button
                                 type="button"
                                 onClick={toggleShowPassword}
@@ -76,7 +76,7 @@ const SignUp = () => {
                             </button>
                     </div>
                 </label>
-                <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md",isLoading&&"bg-opacity-40")}>{
+                <button disabled={isLoading} onClick={submit} className={cn("widthMd w-[80%] md:w-full text-white bg-[#0654B0] h-10 rounded-md font-satosh",isLoading&&"bg-opacity-40")}>{
                      isLoading?(
                         <div className='flex items-center justify-center'>
                         <Loader2 size={20} className='animate-spin'/>
@@ -84,7 +84,7 @@ const SignUp = () => {
                         </div>
                       ):"Sign-up"
                  }</button>
-                <p className=" text-sm">Already have an account? <Link href="/sign-in"><span className=" text-[#0654B0]">Login here</span></Link> </p>
+                <p className=" text-sm font-satosh">Already have an account? <Link href="/sign-in"><span className=" text-[#0654B0]">Login here</span></Link> </p>
             </aside>
             </div>
        </section>

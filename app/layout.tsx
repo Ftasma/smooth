@@ -30,7 +30,7 @@ const satosh= localfont(
   {
     src:[
       {
-        path:"../public/Fonts/OTF/Satoshi-Medium.otf",
+        path:"../public/Fonts/OTF/Satoshi-Regular.otf",
         weight:"700"
       }
     ],

@@ -75,6 +75,7 @@ const config = {
       },
       fontFamily:{
         satoshi:["var(--font-satoshi)"],
+        satosh:["var(--font-satosh)"]
       }
     },
   },
