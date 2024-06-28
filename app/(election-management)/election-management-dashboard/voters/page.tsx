@@ -172,7 +172,7 @@ const Page: React.FC = () => {
         prevFiltered.map((v) => (v.id === voter.id ? { ...v, is_suspended: true } : v))
       );
       toast({
-        title: "Voter disabled"
+        title: "Voter deactivated"
       });
     } catch (error: any) {
       toast({
@@ -196,7 +196,7 @@ const Page: React.FC = () => {
         prevFiltered.map((v) => (v.id === voter.id ? { ...v, is_suspended: false } : v))
       );
       toast({
-        title: "Voter Enabled"
+        title: "Voter activated"
       });
     } catch (error: any) {
       toast({
@@ -250,13 +250,18 @@ const Page: React.FC = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                 {voters[index]?.is_suspended?(<Button onClick={() => enableVoter(voters[index])} className='flex items-center gap-3 border-[#0654B0B2]  w-full p-2 px-3  border rounded'>
-                    Enable
+                    Activate
                     </Button>):(
                     <Button onClick={() => disableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-red-500  border rounded'>
-                    Disable
+                    Deactivated
                     </Button>
-                    )}
-                  
+                    )} 
+                </DropdownMenuItem>
+                <DropdownMenuSeparator/>
+                <DropdownMenuItem>
+                  <Button className='flex items-center gap-3 p-2 px-3 w-full bg-[#0654B0] text-white border rounded'>
+                    Resend Email
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
