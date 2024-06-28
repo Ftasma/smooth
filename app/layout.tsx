@@ -9,9 +9,34 @@ import ClientSetup from "@/components/ClientSetup";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import localfont from "next/font/local"
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
+const satoshi= localfont(
+  {
+    src:[
+      {
+        path:"../public/Fonts/OTF/Satoshi-Bold.otf",
+        weight:"700"
+      }
+    ],
+    variable:"--font-satoshi"
+  }
+)
+const satosh= localfont(
+  {
+    src:[
+      {
+        path:"../public/Fonts/OTF/Satoshi-Medium.otf",
+        weight:"700"
+      }
+    ],
+    variable:"--font-satosh"
+  }
+)
 export const metadata: Metadata = {
 
   title: "Smooth-Ballot",
@@ -29,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${satoshi.variable} ${satosh.variable} ${inter.className}`}>
     
       <Providers>
        <ClientSetup/>

@@ -47,13 +47,13 @@ const DisplayDashboard = () => {
     <section className='flex flex-col gap-16 h-[100%] md:h-[500vh] p-6'>
       <div className='place-self-end'>
         <Link href="/our-pricing">
-          <Button variant="ghost" className='bg-[#0654B0] text-white flex gap-2'>
-            <span><Plus size={18} /></span>
+          <Button variant="ghost" className='bg-[#0654B0] text-white font-satosh flex gap-2'>
+            <span><Plus size={15} /></span>
             Create new election
           </Button>
         </Link>
       </div>
-      <h1 className='text-[#57595A] text-2xl font-bold place-self-center'>Your elections</h1>
+      <h1 className='text-[#57595A] text-3xl place-self-center font-satoshi'>Your elections</h1>
       <div className='grid md:grid-cols-3 grid-cols-2 place-self-center'>
         {Array.isArray(elections) && elections.length > 0 ? (
           elections.map((election: any) => (
@@ -63,7 +63,7 @@ const DisplayDashboard = () => {
               key={election.id}
             >
               <Image src={vote} alt='Vote icon' height={20} width={20}/>
-              <p className='max-h-10 text-md'>{election.name}</p>
+              <p className='max-h-10 text-md font-satosh'>{election.name}</p>
               {/* <p className='text-[#57595A]'>Starting:{election.election_date.split("")}</p> */}
             </div>
           ))

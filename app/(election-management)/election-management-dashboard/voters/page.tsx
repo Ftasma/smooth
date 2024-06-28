@@ -220,6 +220,7 @@ const Page: React.FC = () => {
   };
 
   const renderRows = () => {
+   
     return filteredVoters.map((voter, index) => (
       <TableRow key={index}>
         <TableCell>
@@ -248,10 +249,10 @@ const Page: React.FC = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                {voters[index]?.is_suspended?(<Button onClick={() => enableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-[#CBD2E0] border rounded'>
+                {voters[index]?.is_suspended?(<Button onClick={() => enableVoter(voters[index])} className='flex items-center gap-3 border-[#0654B0B2]  w-full p-2 px-3  border rounded'>
                     Enable
                     </Button>):(
-                    <Button onClick={() => disableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-[#CBD2E0] border rounded'>
+                    <Button onClick={() => disableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-red-500  border rounded'>
                     Disable
                     </Button>
                     )}

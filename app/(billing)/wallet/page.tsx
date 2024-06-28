@@ -61,41 +61,41 @@ const Wallet = () => {
                         <ChevronLeft />
                     </button>
                 </Link>
-                <h1 className='font-bold text-2xl'>My Wallet</h1>
+                <h1 className='font-bold text-2xl font-satoshi'>My Wallet</h1>
             </aside>
-            <div className='dashboard-dimensions !w-[95%] md:shadow-md md:px-10 !h-[80vh]'>
+            <div className='dashboard-dimensions !w-[95%] md:shadow-md md:px-10 !h-[80vh] md:overflow-y-auto no-scrollbar'>
                 <div className='flex flex-col place-self-start mt-7 gap-3 items-start'>
-                    <p className='text-[#363939] text-[1.2rem]'>Your Wallet Balance</p>
-                    <p className='font-semibold text-[1.7rem]'>NGN <span>{balance}</span></p>
+                    <p className='text-[#363939] text-[1.2rem] font-satoshi'>Your Wallet Balance</p>
+                    <p className='font-satoshi text-[1.7rem]'>NGN <span>{balance}</span></p>
                     <Dialog>
                         <DialogTrigger>
-                            <Button className='bg-[#0654B0] text-white w-[13rem] flex gap-2 text-sm' variant="ghost">
+                            <Button className='bg-[#0654B0] font-satosh text-white w-[13rem] flex gap-2 text-sm' variant="ghost">
                                 <Plus size={20} />Add cash
                             </Button>
                         </DialogTrigger>
                         <DialogContent className='!rounded'>
-                            <h1 className='text-center text-2xl font-semibold'>
+                            <h1 className='text-center text-2xl font-satoshi'>
                                 Add Cash
                             </h1>
-                            <p>Make transfer to the account below to top-up your wallet⚡</p>
+                            <p className='font-satosh'>Make transfer to the account below to top-up your wallet⚡</p>
                             <div className='mt-2 flex items-center justify-center'>
-                                <p className='text-3xl font-semibold text-center'>{wallet?.account_number}</p>
+                                <p className='text-3xl font-satoshi text-center'>{wallet?.account_number}</p>
                                 <CopyIcon size={24} className='ml-2 cursor-pointer' />
                             </div>
                             <div className='mt-8 text-center'>
-                                <p className='text-lg font-medium'>Account Name: <span className='font-semibold'>{wallet?.account_name}</span></p>
-                                <p className='text-lg font-medium'>Account Bank: <span className='font-semibold'>{wallet?.bank_name}</span></p>
+                                <p className='text-lg font-satoshi'>Account Name: <span className='font-satoshi'>{wallet?.account_name}</span></p>
+                                <p className='text-lg font-satoshi'>Account Bank: <span className='font-satoshi'>{wallet?.bank_name}</span></p>
                             </div>
                             <div className='mx-auto'>
-                                <Button className='bg-[#0654B0] rounded text-white w-[15rem]'>I&apos;ve sent funds</Button>
+                                <Button className='bg-[#0654B0] font-satoshi rounded text-white w-[15rem]'>I&apos;ve sent funds</Button>
                             </div>
                         </DialogContent>
                     </Dialog>
                 </div>
                 <aside>
                     <div className='flex justify-between mt-7'>
-                        <p className='text-[#363939] font-semibold'>Wallet Transaction</p>
-                        <p className='text-[#0654B0]'>View all</p>
+                        <p className='text-[#363939] font-satoshi'>Wallet Transaction</p>
+                        <p className='text-[#0654B0] font-satoshi'>View all</p>
                     </div>
                     {walletTransactions.map((transaction:any)=>(
                         <div key={transaction.id}>
@@ -103,12 +103,12 @@ const Wallet = () => {
                             <div className='flex gap-5 items-center max-w-[55%]'>
                                 <CreditCard size={28}/>
                                 <div className='flex flex-col items-start'>
-                                    <p className='text-[1rem] md:text-[1.2rem] font-semibold'>{transaction?.description}</p>
-                                    <p className='text-sm'>{formatDate(transaction?.createdAt)}</p>
+                                    <p className='text-[1rem] md:text-[1.2rem] font-satoshi'>{transaction?.description}</p>
+                                    <p className='text-sm font-satosh'>{formatDate(transaction?.createdAt)}</p>
                                 </div>
                             </div>
                             <div className='max-w-[40%]'>
-                                <p className='text-sm md:text-[1.2rem] font-semibold'>NGN <span>{transaction?.amount}</span></p>
+                                <p className='text-sm md:text-[1.2rem] font-satoshi font-semibold'>NGN <span>{transaction?.amount}</span></p>
                             </div>
                         </div>
                             <hr className='border-[1px] mt-2' />

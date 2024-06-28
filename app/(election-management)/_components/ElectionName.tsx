@@ -24,7 +24,7 @@ const ElectionName = () => {
                             <ChevronLeft />
                         </button>
                     </Link>
-                    <h1 className='text-2xl font-bold'>{electionName}</h1>
+                    <h1 className='text-3xl  font-satoshi '>{electionName}</h1>
                 </div>
             </div>
             <div>

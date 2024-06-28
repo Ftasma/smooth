@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   
   return (
-    <main className="h-[100%] w-full bg-[#F6F6F6]">
+    <main className="h-[100%] w-full font-satosh bg-[#F6F6F6]">
       <Navbar/>
         <div className="pt-16 h-[100%]">
           <ElectionName/>

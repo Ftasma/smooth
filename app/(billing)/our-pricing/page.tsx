@@ -7,9 +7,10 @@ import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-
+import { useToast } from '@/components/ui/use-toast'
 const Ourpricing = () => { 
     const router = useRouter()   
+    const { toast } = useToast()
     const sendFreeBilling=(payload:any)=>{
         return axios.post(`${BASE_URL}/billing`,{
             type:payload.type,
@@ -21,12 +22,14 @@ const Ourpricing = () => {
         mutationFn:sendFreeBilling,
         mutationKey:["next"],
         onSuccess:()=>{
-            
             router.push("/create-election")
-            
         },
         onError:(e:any)=>{
-            console.log(e);
+            // console.log(e?.response?.data?.message);
+            toast({
+                variant:"destructive",
+                title:e?.response?.data?.message
+            })
         }
     })
     const sendBilling=()=>{
