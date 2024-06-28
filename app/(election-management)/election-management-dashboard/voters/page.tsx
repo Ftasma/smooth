@@ -49,7 +49,7 @@ const Page: React.FC = () => {
   const [newVoter, setNewVoter] = useState<{ [key: string]: any }>({});
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const router = useRouter()
-  const fieldsToExclude = ["Timestamp", "is_suspended", "_job_id", "createdAt", "updatedAt", "id", "ElectionId", "UserId", "password", "data","has_voted"];
+  const fieldsToExclude = ["Timestamp", "is_suspended", "_job_id", "createdAt", "updatedAt", "id", "ElectionId", "UserId", "password", "data",];
 
   const fetchData = (payload: FetchDataPayload) => {
     const electionId = localStorage.getItem("electionId");
@@ -229,7 +229,7 @@ const Page: React.FC = () => {
         <TableCell>{index + 1}</TableCell>
         {Object.entries(voter).map(([key, value]) => (
           <TableCell key={key}>
-            {value !== undefined && value !== null ? (typeof value === 'object' ? JSON.stringify(value) : String(value)) : ''}
+            {value !== undefined && value !== null ? (typeof value === 'object' ? JSON.stringify(value) : String(value)) : 'No'}
           </TableCell>
         ))}
         <TableCell>
