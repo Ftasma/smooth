@@ -7,9 +7,10 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { useRouter } from "next/navigation"
-import { ChevronDown, FileTerminal, Filter, FilterIcon, FilterX, Loader2, Plus, Scale } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight, FileTerminal, Filter, FilterIcon, FilterX, Loader2, Plus, Scale } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,8 +49,11 @@ const Page: React.FC = () => {
   const [votersCount, setVotersCount] = useState<number>(0);
   const [newVoter, setNewVoter] = useState<{ [key: string]: any }>({});
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [perPage] = useState<number>(50); 
+
   const router = useRouter()
-  const fieldsToExclude = ["Timestamp", "is_suspended", "_job_id", "createdAt", "updatedAt", "id", "ElectionId", "UserId", "password", "data",];
+  const fieldsToExclude = ["Timestamp", "is_suspended", "_job_id", "createdAt", "updatedAt", "id", "ElectionId", "UserId", "password", "data","has_voted"];
 
   const fetchData = (payload: FetchDataPayload) => {
     const electionId = localStorage.getItem("electionId");
@@ -59,7 +63,21 @@ const Page: React.FC = () => {
       per_page: payload.perPage,
     });
   };
-
+  useEffect(() => {
+    setIsLoading(true);
+    mutation.mutate({ page: currentPage, perPage });
+  }, [currentPage, perPage]);
+  const handleNextPage = () => {
+    if (currentPage * perPage < votersCount) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+  
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
   const mutation = useMutation({
     mutationFn: fetchData,
     mutationKey: ["next"],
@@ -253,7 +271,7 @@ const Page: React.FC = () => {
                     Activate
                     </Button>):(
                     <Button onClick={() => disableVoter(voters[index])} className='flex items-center gap-3 w-full p-2 px-3 border-red-500  border rounded'>
-                    Deactivated
+                    Deactivate
                     </Button>
                     )} 
                 </DropdownMenuItem>
@@ -331,6 +349,24 @@ const Page: React.FC = () => {
                 {renderRows()}
               </TableBody>
             </Table>
+            <div className="flex justify-between items-center mt-4">
+              <Button
+                className='blueButton text-white rounded'
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft size={20}/>
+              </Button>
+              <span className="mx-4">Page {currentPage} of {Math.ceil(votersCount / perPage)}</span>
+              <Button
+                className='blueButton text-white rounded'
+                onClick={handleNextPage}
+                disabled={currentPage * perPage >= votersCount}
+              >
+                <ChevronRight size={20}/>
+              </Button>
+            </div>
+
           </div>
         ) : (
           <div className='dashboard-dimensions'>

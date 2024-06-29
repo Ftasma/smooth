@@ -31,3 +31,11 @@ body{
         scrollbar-width: none;  /* Firefox */
   }
 }
+@media (max-width: 360px) {
+  .theGrid {
+    @apply grid-cols-1
+  }
+}
+.blueButton{
+  @apply bg-[#0654B0] 
+}

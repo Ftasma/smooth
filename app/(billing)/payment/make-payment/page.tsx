@@ -52,8 +52,6 @@ const sendPayment =(payload:any)=>{
     toast({
       title:"payment sucessful"
     })
-  }).then(()=>{
-    localStorage.clear()
   })
   } catch (error) {
     

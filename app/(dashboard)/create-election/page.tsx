@@ -32,6 +32,7 @@ const CreateElection = () => {
             toast({
                 title: "Election created sucessfully",
             })
+            localStorage.clear()
             setTimeout(()=>{  
                router.push("/create-election/election-posts")
             },3000)

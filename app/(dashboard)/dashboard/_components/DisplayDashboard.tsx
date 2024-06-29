@@ -46,7 +46,7 @@ const DisplayDashboard = () => {
   return (
     <section className='flex flex-col gap-16 h-[100%] md:h-[500vh] p-6'>
       <div className='place-self-end'>
-        <Link href="/our-pricing">
+        <Link href={localStorage.getItem("noOfVoters")?"/create-election":"/our-pricing"}>
           <Button variant="ghost" className='bg-[#0654B0] text-white font-satosh flex gap-2'>
             <span><Plus size={15} /></span>
             Create new election
@@ -54,7 +54,7 @@ const DisplayDashboard = () => {
         </Link>
       </div>
       <h1 className='text-[#57595A] text-3xl place-self-center font-satoshi'>Your elections</h1>
-      <div className='grid md:grid-cols-3 grid-cols-2 place-self-center'>
+      <div className='theGrid grid md:grid-cols-3 grid-cols-2 xs:grid-col-1 place-self-center'>
         {Array.isArray(elections) && elections.length > 0 ? (
           elections.map((election: any) => (
             <div
