@@ -16,5 +16,5 @@ export function middleware(request: NextRequest) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/dashboard', '/create-election', '/election-management-dashboard','/'],
+  matcher: ['/dashboard', '/create-election', '/election-management-dashboard','/our-pricing','/our-pricing/calculate-price','/make-payment','/send-funds','/wallet','/create-election-2','/voters-acquisition','/accreditation-form','/election-management-dashboard/candidates','/election-management-dashboard/payment','/election-management-dashboard/voters'],
 }

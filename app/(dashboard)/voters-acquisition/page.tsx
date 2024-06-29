@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import axios from 'axios'
@@ -12,14 +12,30 @@ import { v4 as uuidv4 } from "uuid";
 import z from "zod";
 import { useToast } from "@/components/ui/use-toast"
 import { fileUploadInstance } from '@/components/ClientSetup'
-import { useMutation } from '@tanstack/react-query'
-
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation';
 const VotersAcquisition = () => {
   const [file, setFile] = useState<any>();
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [noOfVotersPaidFor, setNoOfVotersPaidFor]= useState<any>(0)
   const { toast } = useToast()
   const router = useRouter()
+  const getLastBiling=async()=>{
+    const electionId = localStorage.getItem("electionId")
+    const response = await axios.get(`${BASE_URL}/billing/${electionId}`)
+    return response.data
+  }
+  const lastBillingQuery= useQuery({
+    queryFn:getLastBiling,
+    queryKey:["billing"]
+  })
+  useEffect(()=>{
+    if (lastBillingQuery?.data) {
+      setNoOfVotersPaidFor(lastBillingQuery?.data?.data?.billing?.no_of_voters)
+    }
+  }, [])
 
+  console.log(lastBillingQuery?.data?.data?.billing?.no_of_voters);
   const sendData = async (payload: any) => {
     const electionId = localStorage.getItem("electionId")
     axios.patch(`${BASE_URL}/election`, {
@@ -29,7 +45,7 @@ const VotersAcquisition = () => {
       router.push('/accreditation-form')
     })
   }
-
+  
   const sendCsvData = async (payload: any) => {
     const electionId = localStorage.getItem("electionId")
     axios.patch(`${BASE_URL}/election`, {
@@ -61,6 +77,13 @@ const VotersAcquisition = () => {
           toast({
             variant: "destructive",
             title: "CSV doesn't contain Email field",
+          })
+          return;
+        }
+        if (filtered_result.length > lastBillingQuery?.data?.data?.billing?.no_of_voters) {
+          toast({
+            variant:"destructive",
+            title:`You paid for ${lastBillingQuery?.data?.data?.billing?.no_of_voters} voters, the csv you want to upload has ${filtered_result.length} voters`
           })
           return;
         }
@@ -115,7 +138,8 @@ const VotersAcquisition = () => {
       },
     } as any);
   }
-
+  
+  
   return (
     <section className='h-[100vh] w-full'>
       <Link href='/create-election-2'><button className='bg-gray-300 rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft /></button></Link>

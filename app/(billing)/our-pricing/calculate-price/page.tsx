@@ -82,7 +82,7 @@ const CalculatePrice = () => {
         <section className='h-screen'>
             <Link href='/our-pricing'><button className='bg-gray-300 rounded-full p-1 text-gray-700 font-thin mt-[7%] ml-[7%]'><ChevronLeft /></button></Link>
             <div className='dashboard-dimensions overflow-y-auto no-scrollbar'>
-                <h1 className='text-2xl font-semibold px-3'>Calculate Price</h1>
+                <h1 className='text-2xl font-satoshi px-3'>Calculate Price</h1>
                 <p className='text-sm px-3'>The price of an election is based on the number of voters and <br /> duration of election process⚡</p>
                 <aside className='flex md:flex-row flex-col justify-around px-4 h-full w-full md:gap-0 gap-3 mt-6'>
                     <div className='leftSide border-[1px] border-[#D2D3D3] h-[69%] my-auto bg-[#F6F6F6] mx-auto w-[90%] md:w-[45%] rounded p-4 text-[#57595A] shadow-lg'>
@@ -103,7 +103,7 @@ const CalculatePrice = () => {
                         <Button onClick={submit} className='p-3 shadow-md text-white bg-[#0654B0] rounded mt-5 w-[98%] font-semibold px-12'>Calculate</Button>
                     </div>
                     <div className='rightSide border-[1px] border-[#D2D3D3] h-[69%] my-auto bg-[#F6F6F6] mx-auto w-[90%] md:w-[45%] rounded p-4 text-[#57595A] shadow-lg sm:overflow-y-auto no-scrollbar'>
-                        <h2 className='mt-[15%] text-start font-semibold text-2xl text-[#0654B0]'>Cart summary</h2>
+                        <h2 className='mt-[15%] text-start font-satoshi text-2xl text-[#0654B0]'>Cart summary</h2>
                         <div className='flex justify-between text-[#363939] font-semibold tracking-widest mt-3'>
                             <p>Total</p>
                             <p>{quote}</p>

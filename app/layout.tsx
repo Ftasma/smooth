@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${satoshi.variable} ${satosh.variable} ${inter.className}`}>
+      <body className={`${satoshi.variable} ${satosh.variable} ${inter.className} font-satosh`}>
     
       <Providers>
        <ClientSetup/>

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 
-body{
-    @apply bg-[#F6F6F6]
-
+ body{
+    @apply bg-[#F6F6F6] 
+    
 }
 .widthMd{
     @apply w-[min(100%,38rem)]
